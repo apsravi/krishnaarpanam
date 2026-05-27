@@ -94,8 +94,27 @@ const PinLogin: React.FC<PinLoginProps> = ({ onAuthenticated, dark }) => {
       padding: '20px',
       fontFamily: "'Cormorant Garamond', Georgia, serif",
     }}>
-      {/* Pillayar Suzhi */}
-      <div style={{ fontSize: '2rem', color: '#C9A84C', marginBottom: '8px', opacity: 0.85 }}>ஃ</div>
+      {/* Pillayar Suzhi — illustrated SVG */}
+      <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+        <svg viewBox="0 0 120 104" width="56" height="48" xmlns="http://www.w3.org/2000/svg"
+          style={{ filter: 'drop-shadow(0 0 10px rgba(255,180,0,0.65))' }} aria-label="Pillayar Suzhi">
+          <defs>
+            <linearGradient id="ps2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"  stop-color="#FFE082"/>
+              <stop offset="45%" stop-color="#FFB300"/>
+              <stop offset="100%" stop-color="#C9A84C"/>
+            </linearGradient>
+          </defs>
+          <path d="M 60 18 C 80 18, 95 30, 95 46 C 95 62, 82 72, 65 70 C 50 68, 40 58, 42 45 C 44 34, 54 28, 63 30 C 72 32, 77 40, 74 48 C 71 55, 63 58, 57 55 C 52 52, 51 46, 54 43"
+            stroke="url(#ps2)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M 42 45 C 35 52, 25 58, 18 62"
+            stroke="url(#ps2)" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+          <line x1="12" y1="73" x2="108" y2="73" stroke="url(#ps2)" stroke-width="5.5" stroke-linecap="round"/>
+          <line x1="18" y1="83" x2="102" y2="83" stroke="url(#ps2)" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="24" y1="92" x2="96"  y2="92" stroke="url(#ps2)" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="60" cy="101" r="4" fill="url(#ps2)"/>
+        </svg>
+      </div>
 
       {/* Logo */}
       <div style={{
