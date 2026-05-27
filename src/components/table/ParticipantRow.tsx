@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { Trash2 } from 'lucide-react'
-import type { Participant } from '@/types'
+import type { Participant, Column } from '@/types'
 import type { ThemeTokens } from '@/utils/theme'
 import type { Translations } from '@/utils/i18n'
 import { parseDasakam, formatDasakam } from '@/utils/dasakam'
@@ -8,6 +8,7 @@ import { parseDasakam, formatDasakam } from '@/utils/dasakam'
 interface ParticipantRowProps {
   participant: Participant
   index: number
+  columns: Column[]
   onUpdate: (id: string, data: Partial<Participant>) => void
   onRemove: (id: string) => void
   isMobile: boolean
@@ -16,27 +17,21 @@ interface ParticipantRowProps {
 }
 
 const ParticipantRow: React.FC<ParticipantRowProps> = ({
-  participant,
-  index,
-  onUpdate,
-  onRemove,
-  isMobile,
-  t,
-  theme,
+  participant, index, columns, onUpdate, onRemove, isMobile, t, theme,
 }) => {
   const [dasakamInput, setDasakamInput] = useState(formatDasakam(participant.dasakams))
-  const [errors, setErrors] = useState<{ name?: string; dasakam?: string }>({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleDasakamBlur = useCallback(() => {
     const parsed = parseDasakam(dasakamInput)
     onUpdate(participant.id, { dasakams: parsed })
     if (parsed.length > 0) {
       setDasakamInput(formatDasakam(parsed))
-      setErrors(e => ({ ...e, dasakam: undefined }))
+      setErrors(e => ({ ...e, dasakams: '' }))
     } else if (dasakamInput.trim()) {
-      setErrors(e => ({ ...e, dasakam: t.row.dasakamErr }))
+      setErrors(e => ({ ...e, dasakams: t.row.dasakamErr }))
     } else {
-      setErrors(e => ({ ...e, dasakam: undefined }))
+      setErrors(e => ({ ...e, dasakams: '' }))
     }
   }, [dasakamInput, participant.id, onUpdate, t.row.dasakamErr])
 
@@ -51,188 +46,132 @@ const ParticipantRow: React.FC<ParticipantRowProps> = ({
     width: '100%',
     outline: 'none',
     transition: 'border-color 0.2s',
+    boxSizing: 'border-box',
+  }
+
+  const errStyle: React.CSSProperties = {
+    fontSize: '0.72rem', color: theme.errorText,
+    fontFamily: "'Cormorant Garamond', serif", marginTop: '2px',
   }
 
   const labelStyle: React.CSSProperties = {
     fontFamily: "'Cinzel Decorative', serif",
-    fontSize: '0.58rem',
-    color: theme.textMid,
-    letterSpacing: '0.07em',
-    display: 'block',
-    marginBottom: '3px',
-  }
-
-  const errStyle: React.CSSProperties = {
-    fontSize: '0.72rem',
-    color: theme.errorText,
-    fontFamily: "'Cormorant Garamond', serif",
-    marginTop: '2px',
+    fontSize: '0.58rem', color: theme.textMid,
+    letterSpacing: '0.07em', display: 'block', marginBottom: '3px',
   }
 
   const badge = (
-    <div
-      style={{
-        minWidth: '28px',
-        width: '28px',
-        height: '28px',
-        borderRadius: '50%',
-        background: theme.badgeGradient,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#FDF6E3',
-        fontFamily: "'Cinzel Decorative', serif",
-        fontSize: '0.6rem',
-        flexShrink: 0,
-        fontWeight: 700,
-      }}
-    >
+    <div style={{
+      minWidth: '28px', width: '28px', height: '28px', borderRadius: '50%',
+      background: theme.badgeGradient,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: '#FDF6E3', fontFamily: "'Cinzel Decorative', serif",
+      fontSize: '0.6rem', flexShrink: 0, fontWeight: 700,
+    }}>
       {index + 1}
     </div>
   )
 
+  // Render a cell input based on column type
+  const renderInput = (col: Column) => {
+    if (col.id === 'dasakams') {
+      return (
+        <>
+          <input
+            value={dasakamInput}
+            onChange={e => setDasakamInput(e.target.value)}
+            onBlur={handleDasakamBlur}
+            placeholder={t.row.dasakamPlaceholder}
+            style={inputStyle}
+            aria-label="Dasakam numbers"
+          />
+          {errors.dasakams && <div style={errStyle}>{errors.dasakams}</div>}
+        </>
+      )
+    }
+    if (col.id === 'name') {
+      return (
+        <>
+          <input
+            value={String(participant.name || '')}
+            onChange={e => onUpdate(participant.id, { name: e.target.value })}
+            placeholder={t.row.namePlaceholder}
+            style={inputStyle}
+            aria-label="Participant name"
+          />
+          {errors.name && <div style={errStyle}>{errors.name}</div>}
+        </>
+      )
+    }
+    // Generic / custom columns
+    return (
+      <input
+        value={String(participant[col.id] || '')}
+        onChange={e => onUpdate(participant.id, { [col.id]: e.target.value })}
+        placeholder={col.required ? `${col.label} *` : t.row.contactPlaceholder}
+        style={inputStyle}
+        type={col.type === 'tel' ? 'tel' : 'text'}
+        aria-label={col.label}
+      />
+    )
+  }
+
   if (isMobile) {
     return (
-      <div
-        style={{
-          background: theme.surface,
-          border: `1px solid ${theme.surfaceBorder}`,
-          borderRadius: '10px',
-          marginBottom: '10px',
-          padding: '14px',
-          boxShadow: theme.surfaceShadow,
-        }}
-      >
+      <div style={{
+        background: theme.surface, border: `1px solid ${theme.surfaceBorder}`,
+        borderRadius: '10px', marginBottom: '10px', padding: '14px',
+        boxShadow: theme.surfaceShadow,
+      }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
           {badge}
           <div style={{ flex: 1, minWidth: 0 }}>
             <input
-              value={participant.name}
+              value={String(participant.name || '')}
               onChange={e => onUpdate(participant.id, { name: e.target.value })}
               placeholder={t.row.namePlaceholder}
               style={inputStyle}
-              aria-label="Participant name"
             />
-            {errors.name && <div style={errStyle}>{errors.name}</div>}
           </div>
           <button
             onClick={() => onRemove(participant.id)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: theme.btnDangerText,
-              padding: '4px',
-              flexShrink: 0,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-            aria-label="Remove participant"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.btnDangerText, padding: '4px', flexShrink: 0, display: 'flex', alignItems: 'center' }}
+            aria-label="Remove"
           >
             <Trash2 size={16} />
           </button>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <div>
-            <label style={labelStyle}>{t.row.dasakamLabel}</label>
-            <input
-              value={dasakamInput}
-              onChange={e => setDasakamInput(e.target.value)}
-              onBlur={handleDasakamBlur}
-              placeholder={t.row.dasakamPlaceholder}
-              style={inputStyle}
-              aria-label="Dasakam numbers"
-            />
-            {errors.dasakam && <div style={errStyle}>{errors.dasakam}</div>}
-          </div>
-          <div>
-            <label style={labelStyle}>{t.row.contactLabel}</label>
-            <input
-              value={participant.contactNumber || ''}
-              onChange={e => onUpdate(participant.id, { contactNumber: e.target.value })}
-              placeholder={t.row.contactPlaceholder}
-              style={inputStyle}
-              aria-label="Contact number"
-              type="tel"
-            />
-          </div>
-          <div style={{ gridColumn: 'span 2' }}>
-            <label style={labelStyle}>{t.row.notesLabel}</label>
-            <input
-              value={participant.notes || ''}
-              onChange={e => onUpdate(participant.id, { notes: e.target.value })}
-              placeholder={t.row.notesPlaceholder}
-              style={inputStyle}
-              aria-label="Notes"
-            />
-          </div>
+          {columns.filter(c => c.id !== 'name' && c.visible).map(col => (
+            <div key={col.id} style={{ gridColumn: col.id === 'notes' ? 'span 2' : 'span 1' }}>
+              <label style={labelStyle}>{col.label}{col.required ? ' *' : ''}</label>
+              {renderInput(col)}
+            </div>
+          ))}
         </div>
       </div>
     )
   }
 
   const tdBase: React.CSSProperties = {
-    padding: '10px 12px',
-    borderBottom: `1px solid ${theme.tableBorder}`,
-    verticalAlign: 'middle',
+    padding: '10px 12px', borderBottom: `1px solid ${theme.tableBorder}`, verticalAlign: 'middle',
   }
 
   return (
     <tr style={{ transition: 'background 0.15s' }}>
       <td style={{ ...tdBase, textAlign: 'center', width: '52px' }}>{badge}</td>
-      <td style={{ ...tdBase, minWidth: '150px' }}>
-        <input
-          value={participant.name}
-          onChange={e => onUpdate(participant.id, { name: e.target.value })}
-          placeholder={t.row.namePlaceholder}
-          style={inputStyle}
-          aria-label="Participant name"
-        />
-        {errors.name && <div style={errStyle}>{errors.name}</div>}
-      </td>
-      <td style={{ ...tdBase, minWidth: '130px' }}>
-        <input
-          value={dasakamInput}
-          onChange={e => setDasakamInput(e.target.value)}
-          onBlur={handleDasakamBlur}
-          placeholder={t.row.dasakamPlaceholder}
-          style={inputStyle}
-          aria-label="Dasakam numbers"
-        />
-        {errors.dasakam && <div style={errStyle}>{errors.dasakam}</div>}
-      </td>
-      <td style={{ ...tdBase, minWidth: '120px' }}>
-        <input
-          value={participant.contactNumber || ''}
-          onChange={e => onUpdate(participant.id, { contactNumber: e.target.value })}
-          placeholder={t.row.contactPlaceholder}
-          style={inputStyle}
-          aria-label="Contact number"
-          type="tel"
-        />
-      </td>
-      <td style={{ ...tdBase, minWidth: '120px' }}>
-        <input
-          value={participant.notes || ''}
-          onChange={e => onUpdate(participant.id, { notes: e.target.value })}
-          placeholder={t.row.notesPlaceholder}
-          style={inputStyle}
-          aria-label="Notes"
-        />
-      </td>
+      {columns.filter(c => c.visible).map(col => (
+        <td key={col.id} style={{ ...tdBase, minWidth: '120px' }}>
+          {renderInput(col)}
+        </td>
+      ))}
       <td style={{ ...tdBase, textAlign: 'center', width: '60px' }}>
         <button
           onClick={() => onRemove(participant.id)}
           style={{
-            background: 'none',
-            border: `1px solid ${theme.btnDangerBorder}`,
-            borderRadius: '6px',
-            cursor: 'pointer',
-            color: theme.btnDangerText,
-            padding: '6px 8px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            transition: 'all 0.15s',
+            background: 'none', border: `1px solid ${theme.btnDangerBorder}`,
+            borderRadius: '6px', cursor: 'pointer', color: theme.btnDangerText,
+            padding: '6px 8px', display: 'inline-flex', alignItems: 'center', transition: 'all 0.15s',
           }}
           aria-label="Remove participant"
         >
