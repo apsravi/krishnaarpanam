@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Sun, Moon } from 'lucide-react'
-import { GURUVAYURAPPAN_IMG } from '@/assets/guruvayurappan'
 import { GURUVAYURAPPAN_COLOR_IMG } from '@/assets/guruvayurappan_color'
+import { GURUVAYURAPPAN_IMG } from '@/assets/guruvayurappan'
 import type { ThemeTokens } from '@/utils/theme'
 import type { Translations } from '@/utils/i18n'
 import type { Lang } from '@/types'
@@ -81,30 +81,30 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
               zIndex: 1,
             }}>
 
-              {/* FRONT — B&W temple photo */}
+              {/* FRONT — Colorful deity image */}
               <div style={{
                 position: 'absolute', inset: 0,
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                border: '3px solid #C9A84C',
-                boxShadow: '0 0 0 1.5px rgba(255,214,0,0.3), 0 0 28px rgba(201,168,76,0.5), 0 6px 20px rgba(0,0,0,0.5)',
-                background: '#0D0D0D',
+                border: '3px solid #FFD700',
+                boxShadow: '0 0 0 1.5px rgba(255,165,0,0.5), 0 0 32px rgba(255,165,0,0.55), 0 6px 20px rgba(0,0,0,0.45)',
+                background: '#FFF8E1',
               }}>
                 {frontError ? (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(2rem,5vw,2.8rem)', color: '#C9A84C', background: 'radial-gradient(circle,rgba(201,168,76,0.15),transparent)' }}>ॐ</div>
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(2rem,5vw,2.8rem)', color: '#FF8F00', background: 'radial-gradient(circle,rgba(255,214,0,0.2),transparent)' }}>ॐ</div>
                 ) : (
                   <img
-                    src={GURUVAYURAPPAN_IMG}
-                    alt="Guruvayurappan"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }}
+                    src={GURUVAYURAPPAN_COLOR_IMG}
+                    alt="Guruvayurappan — colorful"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 10%', display: 'block' }}
                     onError={() => setFrontError(true)}
                   />
                 )}
               </div>
 
-              {/* BACK — colorful deity image */}
+              {/* BACK — B&W temple photo */}
               <div style={{
                 position: 'absolute', inset: 0,
                 backfaceVisibility: 'hidden',
@@ -112,17 +112,17 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
                 transform: 'rotateY(180deg)',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                border: '3px solid #FFD700',
-                boxShadow: '0 0 0 1.5px rgba(255,165,0,0.5), 0 0 32px rgba(255,165,0,0.55), 0 6px 20px rgba(0,0,0,0.45)',
-                background: '#FFF8E1',
+                border: '3px solid #C9A84C',
+                boxShadow: '0 0 0 1.5px rgba(255,214,0,0.3), 0 0 28px rgba(201,168,76,0.5), 0 6px 20px rgba(0,0,0,0.5)',
+                background: '#0D0D0D',
               }}>
                 {backError ? (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(2rem,5vw,2.8rem)', color: '#FF8F00', background: 'radial-gradient(circle,rgba(255,214,0,0.2),transparent)' }}>ॐ</div>
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(2rem,5vw,2.8rem)', color: '#C9A84C', background: 'radial-gradient(circle,rgba(201,168,76,0.15),transparent)' }}>ॐ</div>
                 ) : (
                   <img
-                    src={GURUVAYURAPPAN_COLOR_IMG}
-                    alt="Guruvayurappan — colorful"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 10%', display: 'block' }}
+                    src={GURUVAYURAPPAN_IMG}
+                    alt="Guruvayurappan — B&W"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }}
                     onError={() => setBackError(true)}
                   />
                 )}
