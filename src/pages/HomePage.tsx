@@ -20,12 +20,14 @@ const HomePage: React.FC = () => {
     participants,
     lang, dark, searchQuery,
     columns, pagination, isLoading,
+    rowCap, setRowCap,
     addEmpty, generateRows, updateParticipant, removeParticipant,
     appendParticipants, clearAll, autoAllocate, clearDasakamAssignments,
     setLang, setDark, setSearchQuery,
     toggleColumnVisibility, addCustomColumn, removeCustomColumn, updateColumnLabel, resetColumns,
     setPage, setPageSize,
     filteredParticipants, paginatedParticipants, totalPages,
+    canAddMore, remainingSlots,
   } = useStore()
 
   const t = T[lang]
@@ -44,8 +46,8 @@ const HomePage: React.FC = () => {
 
   const isMobile = windowW < 700
 
-  const handleGenerate = useCallback((count: number, doAutoAlloc: boolean) => {
-    generateRows(count) // store sets isLoading internally
+  const handleGenerate = useCallback((count: number, doAutoAlloc: boolean, cap: number | null) => {
+    generateRows(count, cap)
     if (doAutoAlloc) setTimeout(() => autoAllocate(), 500)
   }, [generateRows, autoAllocate])
 
@@ -112,8 +114,38 @@ const HomePage: React.FC = () => {
             <Users size={14} /> {t.toolbar.generate}
           </button>
 
-          {/* Add one */}
-          <button onClick={addEmpty} style={btnGhost}>{t.toolbar.addOne}</button>
+          {/* Add one — respects row cap */}
+          <button
+            onClick={addEmpty}
+            disabled={!canAddMore()}
+            title={!canAddMore() ? `Row cap reached (${rowCap} max)` : t.toolbar.addOne}
+            style={{ ...btnGhost, opacity: canAddMore() ? 1 : 0.4, cursor: canAddMore() ? 'pointer' : 'not-allowed' }}
+          >
+            {t.toolbar.addOne}
+          </button>
+
+          {/* Row cap badge */}
+          {rowCap !== null && (
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '5px',
+              padding: '5px 10px',
+              background: remainingSlots() === 0
+                ? 'rgba(220,38,38,0.1)'
+                : 'rgba(201,168,76,0.1)',
+              border: `1px solid ${remainingSlots() === 0 ? 'rgba(220,38,38,0.35)' : theme.statsBorder}`,
+              borderRadius: '20px',
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '0.85rem',
+              color: remainingSlots() === 0 ? theme.btnDangerText : theme.textMid,
+            }}>
+              🔒 {remainingSlots() === 0 ? 'Cap reached' : `${remainingSlots()} of ${rowCap} left`}
+              <button
+                onClick={() => setRowCap(null)}
+                title="Remove row cap"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '0.75rem', padding: '0 2px', lineHeight: 1 }}
+              >✕</button>
+            </div>
+          )}
 
           {/* Auto-allocate */}
           {participants.length > 0 && (
@@ -242,110 +274,77 @@ const HomePage: React.FC = () => {
           />
         )}
 
-        {/* Quote + devotion */}
+        {/* Quote + devotion — compact */}
         <div style={{
-          marginTop: '32px',
+          marginTop: '24px',
           background: theme.quoteBg,
           border: `1px solid ${theme.quoteBorder}`,
-          borderRadius: '16px',
-          textAlign: 'center',
+          borderRadius: '12px',
           overflow: 'hidden',
         }}>
-          {/* Top gold accent bar */}
-          <div style={{ height: '3px', background: 'linear-gradient(90deg,transparent,#C9A84C,#FF6B00,#C9A84C,transparent)' }} />
+          <div style={{ height: '2px', background: 'linear-gradient(90deg,transparent,#C9A84C,#FF6B00,#C9A84C,transparent)' }} />
 
-          <div style={{ padding: 'clamp(20px,4vw,36px) clamp(16px,4vw,40px)' }}>
-            {/* Lotus — centered, large, aesthetic */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '18px',
-            }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'clamp(12px,3vw,28px)',
+            padding: 'clamp(12px,2.5vw,18px) clamp(14px,3vw,28px)',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}>
+            {/* Lotus — compact left side */}
+            <div style={{ position: 'relative', flexShrink: 0 }}>
               <div style={{
-                position: 'relative',
-                display: 'inline-block',
+                position: 'absolute', inset: '-8px', borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(233,30,99,0.1) 0%, transparent 70%)',
+                filter: 'blur(6px)',
+              }} />
+              <img
+                src="/lotus.svg"
+                alt="Sacred Lotus"
+                style={{
+                  width: 'clamp(48px,7vw,72px)',
+                  height: 'clamp(48px,7vw,72px)',
+                  display: 'block',
+                  position: 'relative',
+                  zIndex: 1,
+                  filter: 'drop-shadow(0 3px 8px rgba(233,30,99,0.22))',
+                }}
+              />
+            </div>
+
+            {/* Vertical divider — desktop only */}
+            <div style={{ width: '1px', height: '52px', background: 'linear-gradient(180deg,transparent,rgba(201,168,76,0.4),transparent)', flexShrink: 0, display: 'none' }} className="quote-vdivider" />
+
+            {/* Text block */}
+            <div style={{ textAlign: 'center', minWidth: 0 }}>
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 'clamp(0.92rem,2vw,1.1rem)',
+                color: theme.text, fontStyle: 'italic',
+                lineHeight: 1.7, marginBottom: '6px',
               }}>
-                {/* Glow behind lotus */}
-                <div style={{
-                  position: 'absolute',
-                  inset: '-12px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(233,30,99,0.12) 0%, rgba(201,168,76,0.08) 50%, transparent 70%)',
-                  filter: 'blur(8px)',
-                }} />
-                <img
-                  src="/lotus.svg"
-                  alt="Sacred Lotus"
-                  style={{
-                    width: 'clamp(72px,12vw,110px)',
-                    height: 'clamp(72px,12vw,110px)',
-                    display: 'block',
-                    position: 'relative',
-                    zIndex: 1,
-                    filter: 'drop-shadow(0 4px 12px rgba(233,30,99,0.25))',
-                  }}
-                />
-              </div>
+                {t.quote}
+              </p>
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 'clamp(0.8rem,1.6vw,0.96rem)',
+                color: '#C9A84C', letterSpacing: '0.04em',
+                lineHeight: 1.5, fontWeight: 500, marginBottom: '6px',
+              }}>
+                {(t as any).devotionLine}
+              </p>
+              <p style={{
+                fontFamily: "'Cinzel Decorative', serif",
+                fontSize: 'clamp(0.38rem,0.9vw,0.5rem)',
+                color: theme.textLight, letterSpacing: '0.1em', opacity: 0.6,
+              }}>
+                ✦ KRISHNAARPANAM · 100 DASAKAMS · 1036 SHLOKAS · GURUVAYURAPPAN ✦
+              </p>
             </div>
-
-            {/* Ornamental top divider */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ height: '1px', width: 'clamp(30px,8vw,70px)', background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.5))' }} />
-              <span style={{ color: '#C9A84C', fontSize: '0.75rem', opacity: 0.7 }}>✦</span>
-              <div style={{ height: '1px', width: 'clamp(30px,8vw,70px)', background: 'linear-gradient(90deg,rgba(201,168,76,0.5),transparent)' }} />
-            </div>
-
-            {/* Quote */}
-            <p style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(1rem,2.4vw,1.25rem)',
-              color: theme.text,
-              fontStyle: 'italic',
-              lineHeight: 1.9,
-              letterSpacing: '0.02em',
-              marginBottom: '16px',
-            }}>
-              {t.quote}
-            </p>
-
-            {/* Elegant horizontal rule */}
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              gap: '8px', margin: '0 auto 16px',
-            }}>
-              <div style={{ height: '1px', flex: 1, maxWidth: '80px', background: 'linear-gradient(90deg,transparent,#C9A84C)' }} />
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C9A84C', opacity: 0.7 }} />
-              <div style={{ height: '1px', flex: 1, maxWidth: '80px', background: 'linear-gradient(90deg,#C9A84C,transparent)' }} />
-            </div>
-
-            {/* Devotion line */}
-            <p style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(0.88rem,2vw,1.05rem)',
-              color: '#C9A84C',
-              letterSpacing: '0.05em',
-              lineHeight: 1.7,
-              fontWeight: 500,
-              marginBottom: '14px',
-            }}>
-              {(t as any).devotionLine}
-            </p>
-
-            {/* Stamp line */}
-            <p style={{
-              fontFamily: "'Cinzel Decorative', serif",
-              fontSize: 'clamp(0.42rem,1vw,0.54rem)',
-              color: theme.textLight,
-              letterSpacing: '0.12em',
-              opacity: 0.65,
-            }}>
-              ✦ KRISHNAARPANAM · 100 DASAKAMS · 1036 SHLOKAS · GURUVAYURAPPAN ✦
-            </p>
           </div>
 
-          {/* Bottom gold accent bar */}
-          <div style={{ height: '2px', background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.4),transparent)' }} />
+          <div style={{ height: '1.5px', background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent)' }} />
         </div>
       </main>
 
@@ -368,7 +367,14 @@ const HomePage: React.FC = () => {
 
       {/* Generate modal */}
       {showGenModal && (
-        <GenerateModal onGenerate={handleGenerate} onClose={() => setShowGenModal(false)} t={t} theme={theme} />
+        <GenerateModal
+          onGenerate={handleGenerate}
+          onClose={() => setShowGenModal(false)}
+          currentCount={participants.length}
+          existingCap={rowCap}
+          t={t}
+          theme={theme}
+        />
       )}
 
       {/* Clear confirm */}

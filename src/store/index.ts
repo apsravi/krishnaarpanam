@@ -5,6 +5,8 @@ import { DEFAULT_COLUMNS } from '@/types'
 import { generateId } from '@/utils/id'
 import { autoAllocateDasakams } from '@/utils/dasakam'
 
+const LOCKED = ['name', 'dasakams']
+
 interface Store {
   participants: Participant[]
   lang: Lang
@@ -14,9 +16,13 @@ interface Store {
   pagination: PaginationState
   isLoading: boolean
 
+  // Row cap — when set, app will not allow total rows to exceed this number
+  rowCap: number | null
+  setRowCap: (cap: number | null) => void
+
   // Participant actions
   addEmpty: () => void
-  generateRows: (count: number) => void
+  generateRows: (count: number, cap?: number | null) => void
   updateParticipant: (id: string, data: Partial<Participant>) => void
   removeParticipant: (id: string) => void
   setParticipants: (participants: Participant[]) => void
@@ -47,6 +53,8 @@ interface Store {
   paginatedParticipants: () => Participant[]
   totalPages: () => number
   visibleColumns: () => Column[]
+  canAddMore: () => boolean
+  remainingSlots: () => number
 }
 
 export const useStore = create<Store>()(
@@ -59,29 +67,65 @@ export const useStore = create<Store>()(
       columns: DEFAULT_COLUMNS,
       pagination: { page: 1, pageSize: 10 },
       isLoading: false,
+      rowCap: null,
 
-      addEmpty: () =>
+      setRowCap: (cap) => set({ rowCap: cap }),
+
+      canAddMore: () => {
+        const { participants, rowCap } = get()
+        if (rowCap === null) return true
+        return participants.length < rowCap
+      },
+
+      remainingSlots: () => {
+        const { participants, rowCap } = get()
+        if (rowCap === null) return Infinity
+        return Math.max(0, rowCap - participants.length)
+      },
+
+      addEmpty: () => {
+        const { participants, rowCap } = get()
+        if (rowCap !== null && participants.length >= rowCap) return // cap enforced
         set(s => ({
           participants: [
             ...s.participants,
             { id: generateId(), name: '', dasakams: [], contactNumber: '', notes: '', createdAt: new Date().toISOString() },
           ],
-        })),
+        }))
+      },
 
-      generateRows: (count: number) => {
-        set({ isLoading: true })
+      generateRows: (count: number, cap?: number | null) => {
+        // Determine effective cap
+        const effectiveCap = cap !== undefined ? cap : get().rowCap
+        const current = get().participants.length
+
+        // How many rows can actually be added
+        const allowed = effectiveCap !== null
+          ? Math.max(0, effectiveCap - current)
+          : count
+
+        const actualCount = Math.min(count, allowed)
+        if (actualCount === 0) return
+
+        // Set the cap in store if a new cap was specified
+        if (cap !== undefined && cap !== null) {
+          set({ rowCap: cap, isLoading: true })
+        } else {
+          set({ isLoading: true })
+        }
+
         setTimeout(() => {
           set(s => ({
             isLoading: false,
             participants: [
               ...s.participants,
-              ...Array.from({ length: count }, () => ({
+              ...Array.from({ length: actualCount }, () => ({
                 id: generateId(), name: '', dasakams: [], contactNumber: '', notes: '',
                 createdAt: new Date().toISOString(),
               })),
             ],
           }))
-        }, 400) // slight delay to show loading
+        }, 400)
       },
 
       updateParticipant: (id, data) =>
@@ -95,7 +139,7 @@ export const useStore = create<Store>()(
       appendParticipants: (incoming) =>
         set(s => ({ participants: [...s.participants, ...incoming] })),
 
-      clearAll: () => set({ participants: [], searchQuery: '', pagination: { page: 1, pageSize: get().pagination.pageSize } }),
+      clearAll: () => set({ participants: [], searchQuery: '', rowCap: null, pagination: { page: 1, pageSize: get().pagination.pageSize } }),
 
       autoAllocate: () =>
         set(s => ({ participants: autoAllocateDasakams(s.participants) })),
@@ -103,9 +147,7 @@ export const useStore = create<Store>()(
       clearDasakamAssignments: () =>
         set(s => ({ participants: s.participants.map(p => ({ ...p, dasakams: [] })) })),
 
-      // Column management
       toggleColumnVisibility: (id) => {
-        const LOCKED = ['name', 'dasakams']
         set(s => ({
           columns: s.columns.map(c =>
             c.id === id && !LOCKED.includes(c.id) ? { ...c, visible: !c.visible } : c
@@ -115,21 +157,10 @@ export const useStore = create<Store>()(
 
       addCustomColumn: (label, type) =>
         set(s => ({
-          columns: [
-            ...s.columns,
-            {
-              id: `custom_${generateId()}`,
-              label,
-              visible: true,
-              required: false,
-              type,
-              isCustom: true,
-            },
-          ],
+          columns: [...s.columns, { id: `custom_${generateId()}`, label, visible: true, required: false, type, isCustom: true }],
         })),
 
       removeCustomColumn: (id) => {
-        const LOCKED = ['name', 'dasakams']
         if (LOCKED.includes(id)) return
         set(s => ({ columns: s.columns.filter(c => c.id !== id) }))
       },
@@ -139,34 +170,28 @@ export const useStore = create<Store>()(
 
       resetColumns: () => set({ columns: DEFAULT_COLUMNS }),
 
-      // Pagination
       setPage: (page) => set(s => ({ pagination: { ...s.pagination, page } })),
       setPageSize: (pageSize) => set(s => ({ pagination: { page: 1, pageSize } })),
-
-      // Preferences
       setLang: (lang) => set({ lang }),
       setDark: (dark) => set({ dark }),
       setSearchQuery: (searchQuery) => set({ searchQuery, pagination: { ...get().pagination, page: 1 } }),
       setLoading: (isLoading) => set({ isLoading }),
 
-      // Computed
       filteredParticipants: () => {
         const { participants, searchQuery } = get()
         const q = searchQuery.trim().toLowerCase()
         if (!q) return participants
-        return participants.filter(
-          p =>
-            p.name.toLowerCase().includes(q) ||
-            p.dasakams.some(d => d.toString().includes(q)) ||
-            (p.contactNumber || '').includes(q)
+        return participants.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.dasakams.some(d => d.toString().includes(q)) ||
+          (p.contactNumber || '').includes(q)
         )
       },
 
       paginatedParticipants: () => {
         const filtered = get().filteredParticipants()
         const { page, pageSize } = get().pagination
-        const start = (page - 1) * pageSize
-        return filtered.slice(start, start + pageSize)
+        return filtered.slice((page - 1) * pageSize, page * pageSize)
       },
 
       totalPages: () => {
@@ -176,6 +201,6 @@ export const useStore = create<Store>()(
 
       visibleColumns: () => get().columns.filter(c => c.visible),
     }),
-    { name: 'krishnaarpanam-v4' }
+    { name: 'krishnaarpanam-v5' }
   )
 )

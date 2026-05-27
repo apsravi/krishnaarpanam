@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Sun, Moon } from 'lucide-react'
 import { GURUVAYURAPPAN_IMG } from '@/assets/guruvayurappan'
+import { GURUVAYURAPPAN_COLOR_IMG } from '@/assets/guruvayurappan_color'
 import type { ThemeTokens } from '@/utils/theme'
 import type { Translations } from '@/utils/i18n'
 import type { Lang } from '@/types'
@@ -14,7 +15,12 @@ interface HeaderProps {
   theme: ThemeTokens
 }
 
+const LOGO_SIZE = 'clamp(76px, 13vw, 108px)'
+
 const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme }) => {
+  const [frontError, setFrontError] = useState(false)
+  const [backError, setBackError] = useState(false)
+
   return (
     <header style={{ background: theme.headerGradient, position: 'relative', overflow: 'hidden' }}>
       {/* Top shimmer */}
@@ -22,35 +28,18 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
 
       <div style={{ padding: 'clamp(14px,3vw,26px) 16px', position: 'relative' }}>
 
-        {/* Language + dark toggle — top right */}
-        <div style={{
-          position: 'absolute', top: '12px', right: '12px',
-          display: 'flex', gap: '6px', zIndex: 10, alignItems: 'center',
-        }}>
+        {/* Controls — top right */}
+        <div style={{ position: 'absolute', top: '12px', right: '12px', display: 'flex', gap: '6px', zIndex: 10, alignItems: 'center' }}>
           <button
             onClick={() => setLang(lang === 'en' ? 'ta' : 'en')}
             aria-label="Toggle language"
-            style={{
-              background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)',
-              borderRadius: '20px', color: '#C9A84C', padding: '5px 13px',
-              fontFamily: "'Cinzel Decorative',serif",
-              fontSize: 'clamp(0.48rem,1.4vw,0.6rem)', cursor: 'pointer',
-              letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.2s',
-            }}
-          >
+            style={{ background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)', borderRadius: '20px', color: '#C9A84C', padding: '5px 13px', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.48rem,1.4vw,0.6rem)', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.2s' }}>
             {t.langToggle}
           </button>
           <button
             onClick={() => setDark(!dark)}
             aria-label={dark ? t.lightMode : t.darkMode}
-            title={dark ? t.lightMode : t.darkMode}
-            style={{
-              background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)',
-              borderRadius: '50%', color: '#C9A84C', width: '32px', height: '32px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', flexShrink: 0, transition: 'all 0.2s',
-            }}
-          >
+            style={{ background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)', borderRadius: '50%', color: '#C9A84C', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0, transition: 'all 0.2s' }}>
             {dark ? <Sun size={14} /> : <Moon size={14} />}
           </button>
         </div>
@@ -58,87 +47,109 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
         {/* Centered content */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
 
-          {/* Guruvayurappan actual photo — framed with golden arch effect */}
-          <div style={{ position: 'relative', marginBottom: '14px' }}>
-            {/* Outer glow halo */}
-            <div style={{
-              position: 'absolute', inset: '-10px', borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(255,214,0,0.4) 0%, rgba(255,107,0,0.15) 50%, transparent 70%)',
-              animation: 'haloPulse 3s ease-in-out infinite',
-              zIndex: 0,
-            }} />
-            {/* Gold ring decorative outer */}
-            <div style={{
-              position: 'absolute', inset: '-4px', borderRadius: '50%',
-              border: '1.5px solid rgba(201,168,76,0.5)',
-              zIndex: 1,
-            }} />
-            {/* Image frame */}
-            <div style={{
-              width: 'clamp(76px,13vw,110px)',
-              height: 'clamp(76px,13vw,110px)',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              border: '3px solid #C9A84C',
-              boxShadow: '0 0 0 1px rgba(255,214,0,0.35), 0 0 30px rgba(201,168,76,0.55), 0 6px 20px rgba(0,0,0,0.5)',
-              background: '#000',
+          {/* ── FLIP CARD LOGO ── */}
+          <div
+            className="logo-flip-container"
+            style={{
+              width: LOGO_SIZE,
+              height: LOGO_SIZE,
+              perspective: '700px',
+              marginBottom: '14px',
+              cursor: 'pointer',
               position: 'relative',
-              zIndex: 2,
               flexShrink: 0,
+            }}
+            title="Hover to reveal Guruvayurappan"
+          >
+            {/* Outer halo glow */}
+            <div className="logo-halo" style={{
+              position: 'absolute',
+              inset: '-10px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(255,214,0,0.38) 0%, rgba(255,107,0,0.12) 55%, transparent 72%)',
+              zIndex: 0,
+              pointerEvents: 'none',
+            }} />
+
+            {/* Flip inner wrapper */}
+            <div className="logo-flip-inner" style={{
+              width: '100%',
+              height: '100%',
+              position: 'relative',
+              transformStyle: 'preserve-3d',
+              transition: 'transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)',
+              zIndex: 1,
             }}>
-              <img
-                src={GURUVAYURAPPAN_IMG}
-                alt="Guruvayurappan — Lord Vishnu of Guruvayur Temple"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center 15%',
-                  display: 'block',
-                }}
-              />
+
+              {/* FRONT — B&W temple photo */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '3px solid #C9A84C',
+                boxShadow: '0 0 0 1.5px rgba(255,214,0,0.3), 0 0 28px rgba(201,168,76,0.5), 0 6px 20px rgba(0,0,0,0.5)',
+                background: '#0D0D0D',
+              }}>
+                {frontError ? (
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(2rem,5vw,2.8rem)', color: '#C9A84C', background: 'radial-gradient(circle,rgba(201,168,76,0.15),transparent)' }}>ॐ</div>
+                ) : (
+                  <img
+                    src={GURUVAYURAPPAN_IMG}
+                    alt="Guruvayurappan"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }}
+                    onError={() => setFrontError(true)}
+                  />
+                )}
+              </div>
+
+              {/* BACK — colorful deity image */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                transform: 'rotateY(180deg)',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '3px solid #FFD700',
+                boxShadow: '0 0 0 1.5px rgba(255,165,0,0.5), 0 0 32px rgba(255,165,0,0.55), 0 6px 20px rgba(0,0,0,0.45)',
+                background: '#FFF8E1',
+              }}>
+                {backError ? (
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(2rem,5vw,2.8rem)', color: '#FF8F00', background: 'radial-gradient(circle,rgba(255,214,0,0.2),transparent)' }}>ॐ</div>
+                ) : (
+                  <img
+                    src={GURUVAYURAPPAN_COLOR_IMG}
+                    alt="Guruvayurappan — colorful"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 10%', display: 'block' }}
+                    onError={() => setBackError(true)}
+                  />
+                )}
+              </div>
             </div>
           </div>
 
           {/* Sanskrit subtitle */}
-          <p style={{
-            fontFamily: "'Cinzel Decorative',serif",
-            fontSize: 'clamp(0.44rem,1.4vw,0.68rem)',
-            color: 'rgba(201,168,76,0.9)', letterSpacing: '0.16em', marginBottom: '6px',
-          }}>
+          <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.44rem,1.4vw,0.68rem)', color: 'rgba(201,168,76,0.9)', letterSpacing: '0.16em', marginBottom: '6px' }}>
             {lang === 'en' ? 'நாராயணீயம் · Nārāyaṇīyam' : 'Narayaneeyam · நாராயணீயம்'}
           </p>
 
           {/* App name */}
-          <h1 style={{
-            fontFamily: "'Cinzel Decorative',serif",
-            fontSize: 'clamp(1.3rem,5vw,2.8rem)',
-            color: '#FDF6E3', letterSpacing: '0.04em',
-            textShadow: '0 2px 22px rgba(201,168,76,0.5)',
-            margin: 0, lineHeight: 1.15,
-          }}>
+          <h1 style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(1.3rem,5vw,2.8rem)', color: '#FDF6E3', letterSpacing: '0.04em', textShadow: '0 2px 22px rgba(201,168,76,0.5)', margin: 0, lineHeight: 1.15 }}>
             {t.appName}
           </h1>
 
           {/* Tagline */}
-          <p style={{
-            fontFamily: "'Cinzel Decorative',serif",
-            fontSize: 'clamp(0.44rem,1.4vw,0.72rem)',
-            color: '#C9A84C', letterSpacing: '0.13em', marginTop: '5px',
-          }}>
+          <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.44rem,1.4vw,0.72rem)', color: '#C9A84C', letterSpacing: '0.13em', marginTop: '5px' }}>
             {t.appSub}
           </p>
 
-          {/* Ornamental divider */}
+          {/* Divider */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
             <div style={{ height: '1px', width: 'clamp(24px,5vw,54px)', background: 'linear-gradient(90deg,transparent,#C9A84C)' }} />
             <span style={{ color: '#C9A84C', fontSize: '0.9rem' }}>✦</span>
-            <span style={{
-              color: '#FF6B00', fontFamily: "'Cinzel Decorative',serif",
-              fontSize: 'clamp(0.44rem,1.1vw,0.58rem)', letterSpacing: '0.15em',
-            }}>
-              {t.place}
-            </span>
+            <span style={{ color: '#FF6B00', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.44rem,1.1vw,0.58rem)', letterSpacing: '0.15em' }}>{t.place}</span>
             <span style={{ color: '#C9A84C', fontSize: '0.9rem' }}>✦</span>
             <div style={{ height: '1px', width: 'clamp(24px,5vw,54px)', background: 'linear-gradient(90deg,#C9A84C,transparent)' }} />
           </div>
@@ -148,10 +159,28 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
       {/* Bottom shimmer */}
       <div style={{ height: '3px', background: 'linear-gradient(90deg,transparent,#FF6B00,#C9A84C,#FF6B00,transparent)' }} />
 
+      {/* Flip card CSS */}
       <style>{`
+        .logo-flip-container:hover .logo-flip-inner {
+          transform: rotateY(180deg);
+        }
+        .logo-halo {
+          animation: haloPulse 3s ease-in-out infinite;
+        }
+        .logo-flip-container:hover .logo-halo {
+          animation: none;
+          opacity: 1;
+          background: radial-gradient(circle, rgba(255,165,0,0.5) 0%, rgba(255,107,0,0.2) 55%, transparent 72%);
+        }
         @keyframes haloPulse {
-          0%, 100% { opacity: 0.55; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.08); }
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.09); }
+        }
+        @media (hover: none) {
+          /* On touch devices, tap toggles the flip */
+          .logo-flip-container:active .logo-flip-inner {
+            transform: rotateY(180deg);
+          }
         }
       `}</style>
     </header>
