@@ -244,40 +244,108 @@ const HomePage: React.FC = () => {
 
         {/* Quote + devotion */}
         <div style={{
-          marginTop: '32px', padding: 'clamp(14px,3vw,22px)',
-          background: theme.quoteBg, border: `1px solid ${theme.quoteBorder}`,
-          borderRadius: '10px', textAlign: 'center',
+          marginTop: '32px',
+          background: theme.quoteBg,
+          border: `1px solid ${theme.quoteBorder}`,
+          borderRadius: '16px',
+          textAlign: 'center',
+          overflow: 'hidden',
         }}>
-          {/* Lotus icon */}
-          <div style={{ marginBottom: '10px' }}>
-            <img src="/lotus.svg" alt="Lotus" style={{ width: 'clamp(36px,6vw,52px)', height: 'clamp(36px,6vw,52px)', opacity: 0.85 }} />
+          {/* Top gold accent bar */}
+          <div style={{ height: '3px', background: 'linear-gradient(90deg,transparent,#C9A84C,#FF6B00,#C9A84C,transparent)' }} />
+
+          <div style={{ padding: 'clamp(20px,4vw,36px) clamp(16px,4vw,40px)' }}>
+            {/* Lotus — centered, large, aesthetic */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '18px',
+            }}>
+              <div style={{
+                position: 'relative',
+                display: 'inline-block',
+              }}>
+                {/* Glow behind lotus */}
+                <div style={{
+                  position: 'absolute',
+                  inset: '-12px',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(233,30,99,0.12) 0%, rgba(201,168,76,0.08) 50%, transparent 70%)',
+                  filter: 'blur(8px)',
+                }} />
+                <img
+                  src="/lotus.svg"
+                  alt="Sacred Lotus"
+                  style={{
+                    width: 'clamp(72px,12vw,110px)',
+                    height: 'clamp(72px,12vw,110px)',
+                    display: 'block',
+                    position: 'relative',
+                    zIndex: 1,
+                    filter: 'drop-shadow(0 4px 12px rgba(233,30,99,0.25))',
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Ornamental top divider */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '16px' }}>
+              <div style={{ height: '1px', width: 'clamp(30px,8vw,70px)', background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.5))' }} />
+              <span style={{ color: '#C9A84C', fontSize: '0.75rem', opacity: 0.7 }}>✦</span>
+              <div style={{ height: '1px', width: 'clamp(30px,8vw,70px)', background: 'linear-gradient(90deg,rgba(201,168,76,0.5),transparent)' }} />
+            </div>
+
+            {/* Quote */}
+            <p style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(1rem,2.4vw,1.25rem)',
+              color: theme.text,
+              fontStyle: 'italic',
+              lineHeight: 1.9,
+              letterSpacing: '0.02em',
+              marginBottom: '16px',
+            }}>
+              {t.quote}
+            </p>
+
+            {/* Elegant horizontal rule */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              gap: '8px', margin: '0 auto 16px',
+            }}>
+              <div style={{ height: '1px', flex: 1, maxWidth: '80px', background: 'linear-gradient(90deg,transparent,#C9A84C)' }} />
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C9A84C', opacity: 0.7 }} />
+              <div style={{ height: '1px', flex: 1, maxWidth: '80px', background: 'linear-gradient(90deg,#C9A84C,transparent)' }} />
+            </div>
+
+            {/* Devotion line */}
+            <p style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(0.88rem,2vw,1.05rem)',
+              color: '#C9A84C',
+              letterSpacing: '0.05em',
+              lineHeight: 1.7,
+              fontWeight: 500,
+              marginBottom: '14px',
+            }}>
+              {(t as any).devotionLine}
+            </p>
+
+            {/* Stamp line */}
+            <p style={{
+              fontFamily: "'Cinzel Decorative', serif",
+              fontSize: 'clamp(0.42rem,1vw,0.54rem)',
+              color: theme.textLight,
+              letterSpacing: '0.12em',
+              opacity: 0.65,
+            }}>
+              ✦ KRISHNAARPANAM · 100 DASAKAMS · 1036 SHLOKAS · GURUVAYURAPPAN ✦
+            </p>
           </div>
-          {/* Quote */}
-          <p style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(0.92rem,2.2vw,1.1rem)',
-            color: theme.textLight, fontStyle: 'italic', lineHeight: 1.8,
-          }}>
-            {t.quote}
-          </p>
-          {/* Divider */}
-          <div style={{ width: '60px', height: '1px', background: 'linear-gradient(90deg,transparent,#C9A84C,transparent)', margin: '12px auto' }} />
-          {/* Devotion line */}
-          <p style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(0.82rem,1.8vw,0.98rem)',
-            color: '#C9A84C', letterSpacing: '0.04em', lineHeight: 1.6,
-          }}>
-            {(t as any).devotionLine}
-          </p>
-          {/* Stamp */}
-          <p style={{
-            fontFamily: "'Cinzel Decorative', serif",
-            fontSize: 'clamp(0.44rem,1.1vw,0.56rem)',
-            color: theme.textLight, letterSpacing: '0.1em', marginTop: '12px', opacity: 0.7,
-          }}>
-            ✦ KRISHNAARPANAM · 100 DASAKAMS · 1036 SHLOKAS · GURUVAYURAPPAN ✦
-          </p>
+
+          {/* Bottom gold accent bar */}
+          <div style={{ height: '2px', background: 'linear-gradient(90deg,transparent,rgba(201,168,76,0.4),transparent)' }} />
         </div>
       </main>
 
