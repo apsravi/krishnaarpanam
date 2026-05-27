@@ -242,23 +242,39 @@ const HomePage: React.FC = () => {
           />
         )}
 
-        {/* Quote */}
+        {/* Quote + devotion */}
         <div style={{
-          marginTop: '32px', padding: 'clamp(14px,3vw,20px)',
+          marginTop: '32px', padding: 'clamp(14px,3vw,22px)',
           background: theme.quoteBg, border: `1px solid ${theme.quoteBorder}`,
           borderRadius: '10px', textAlign: 'center',
         }}>
+          {/* Lotus icon */}
+          <div style={{ marginBottom: '10px' }}>
+            <img src="/lotus.svg" alt="Lotus" style={{ width: 'clamp(36px,6vw,52px)', height: 'clamp(36px,6vw,52px)', opacity: 0.85 }} />
+          </div>
+          {/* Quote */}
           <p style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(0.88rem,2vw,1.05rem)',
-            color: theme.textLight, fontStyle: 'italic', lineHeight: 1.8, whiteSpace: 'pre-line',
+            fontSize: 'clamp(0.92rem,2.2vw,1.1rem)',
+            color: theme.textLight, fontStyle: 'italic', lineHeight: 1.8,
           }}>
             {t.quote}
           </p>
+          {/* Divider */}
+          <div style={{ width: '60px', height: '1px', background: 'linear-gradient(90deg,transparent,#C9A84C,transparent)', margin: '12px auto' }} />
+          {/* Devotion line */}
+          <p style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 'clamp(0.82rem,1.8vw,0.98rem)',
+            color: '#C9A84C', letterSpacing: '0.04em', lineHeight: 1.6,
+          }}>
+            {(t as any).devotionLine}
+          </p>
+          {/* Stamp */}
           <p style={{
             fontFamily: "'Cinzel Decorative', serif",
-            fontSize: 'clamp(0.46rem,1.2vw,0.58rem)',
-            color: '#C9A84C', letterSpacing: '0.1em', marginTop: '10px',
+            fontSize: 'clamp(0.44rem,1.1vw,0.56rem)',
+            color: theme.textLight, letterSpacing: '0.1em', marginTop: '12px', opacity: 0.7,
           }}>
             ✦ KRISHNAARPANAM · 100 DASAKAMS · 1036 SHLOKAS · GURUVAYURAPPAN ✦
           </p>
@@ -271,10 +287,13 @@ const HomePage: React.FC = () => {
         borderTop: `1px solid ${theme.footerBorder}`,
         background: theme.footerBg, marginTop: '24px',
       }}>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.72rem,1.8vw,0.88rem)', color: theme.textLight, marginBottom: '4px' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.72rem,1.8vw,0.88rem)', color: theme.textLight, marginBottom: '2px' }}>
           {t.footer}
         </p>
-        <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.46rem,1.2vw,0.58rem)', color: theme.textMid, letterSpacing: '0.06em' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.68rem,1.6vw,0.82rem)', color: '#C9A84C', marginBottom: '4px', fontStyle: 'italic' }}>
+          {(t as any).devotionLine}
+        </p>
+        <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.44rem,1.1vw,0.56rem)', color: theme.textMid, letterSpacing: '0.06em' }}>
           {t.copyright}
         </p>
       </footer>

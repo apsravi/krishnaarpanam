@@ -104,12 +104,14 @@ export const useStore = create<Store>()(
         set(s => ({ participants: s.participants.map(p => ({ ...p, dasakams: [] })) })),
 
       // Column management
-      toggleColumnVisibility: (id) =>
+      toggleColumnVisibility: (id) => {
+        const LOCKED = ['name', 'dasakams']
         set(s => ({
           columns: s.columns.map(c =>
-            c.id === id && !c.required ? { ...c, visible: !c.visible } : c
+            c.id === id && !LOCKED.includes(c.id) ? { ...c, visible: !c.visible } : c
           ),
-        })),
+        }))
+      },
 
       addCustomColumn: (label, type) =>
         set(s => ({
@@ -126,8 +128,11 @@ export const useStore = create<Store>()(
           ],
         })),
 
-      removeCustomColumn: (id) =>
-        set(s => ({ columns: s.columns.filter(c => c.id !== id) })),
+      removeCustomColumn: (id) => {
+        const LOCKED = ['name', 'dasakams']
+        if (LOCKED.includes(id)) return
+        set(s => ({ columns: s.columns.filter(c => c.id !== id) }))
+      },
 
       updateColumnLabel: (id, label) =>
         set(s => ({ columns: s.columns.map(c => c.id === id ? { ...c, label } : c) })),
