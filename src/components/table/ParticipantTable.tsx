@@ -37,10 +37,10 @@ const ParticipantTable: React.FC<ParticipantTableProps> = ({
         background: theme.dropzoneBg,
       }}>
         <div style={{ fontSize: '3rem', marginBottom: '14px', opacity: 0.35 }}>🪷</div>
-        <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.7rem,2vw,0.88rem)', color: theme.textLight, letterSpacing: '0.08em', marginBottom: '8px' }}>
+        <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.96rem,2.2vw,1.1rem)', color: theme.textLight, letterSpacing: '0.08em', marginBottom: '8px' }}>
           {t.empty.title}
         </p>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.85rem,2vw,1rem)', color: theme.textLight, fontStyle: 'italic' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.05rem,2.2vw,1.2rem)', color: theme.textLight, fontStyle: 'italic' }}>
           {t.empty.sub}
         </p>
       </div>
@@ -72,17 +72,17 @@ const ParticipantTable: React.FC<ParticipantTableProps> = ({
               <tr>
                 <th style={{
                   background: theme.tableHeadBg, color: theme.tableHeadText,
-                  fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.56rem,1.3vw,0.7rem)',
-                  letterSpacing: '0.07em', padding: '13px 12px', textAlign: 'center',
-                  width: '52px', borderRadius: '8px 0 0 0',
+                  fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.86rem,1.5vw,1rem)',
+                  letterSpacing: '0.07em', padding: '15px 14px', textAlign: 'center',
+                  width: '56px', borderRadius: '8px 0 0 0',
                 }}>
                   {t.table.no}
                 </th>
                 {visibleCols.map((col, i) => (
                   <th key={col.id} style={{
                     background: theme.tableHeadBg, color: theme.tableHeadText,
-                    fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.56rem,1.3vw,0.7rem)',
-                    letterSpacing: '0.07em', padding: '13px 12px', textAlign: 'left',
+                    fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.86rem,1.5vw,1rem)',
+                    letterSpacing: '0.07em', padding: '15px 14px', textAlign: 'left',
                     whiteSpace: 'nowrap', fontWeight: 700,
                   }}>
                     {col.label}{col.required ? ' *' : ''}
@@ -90,9 +90,9 @@ const ParticipantTable: React.FC<ParticipantTableProps> = ({
                 ))}
                 <th style={{
                   background: theme.tableHeadBg, color: theme.tableHeadText,
-                  fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.56rem,1.3vw,0.7rem)',
-                  letterSpacing: '0.07em', padding: '13px 12px', textAlign: 'center',
-                  width: '60px', borderRadius: '0 8px 0 0',
+                  fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.86rem,1.5vw,1rem)',
+                  letterSpacing: '0.07em', padding: '15px 14px', textAlign: 'center',
+                  width: '64px', borderRadius: '0 8px 0 0',
                 }}>
                   {t.table.action}
                 </th>
@@ -119,7 +119,7 @@ const ParticipantTable: React.FC<ParticipantTableProps> = ({
           style={{
             background: 'transparent', border: `1.5px dashed ${theme.dropzoneBorder}`,
             borderRadius: '8px', padding: '8px 18px', cursor: 'pointer',
-            fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.56rem,1.4vw,0.66rem)',
+            fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.86rem,1.6vw,1rem)',
             color: theme.textMid, letterSpacing: '0.05em',
             display: 'inline-flex', alignItems: 'center', gap: '6px', transition: 'all 0.2s',
           }}

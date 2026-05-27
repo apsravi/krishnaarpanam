@@ -79,7 +79,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.1rem',
+                fontSize: '1.3rem',
               }}
             >
               📲
@@ -87,7 +87,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
             <h3
               style={{
                 fontFamily: "'Cinzel Decorative', serif",
-                fontSize: '0.85rem',
+                fontSize: '1.2rem',
                 color: theme.text,
                 letterSpacing: '0.04em',
               }}
@@ -97,7 +97,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
           </div>
           <button
             onClick={onClose}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '1.2rem' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '1.3rem' }}
           >
             ✕
           </button>
@@ -107,7 +107,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
         <label
           style={{
             fontFamily: "'Cinzel Decorative', serif",
-            fontSize: '0.62rem',
+            fontSize: '1.2rem',
             color: theme.textMid,
             letterSpacing: '0.08em',
             display: 'block',
@@ -129,7 +129,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
             border: `1.5px solid ${theme.inputBorder}`,
             borderRadius: '8px',
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '1.05rem',
+            fontSize: '1.3rem',
             color: theme.inputText,
             background: theme.inputBg,
             outline: 'none',
@@ -137,7 +137,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
           }}
         />
         {error && (
-          <p style={{ fontSize: '0.78rem', color: theme.errorText, fontFamily: "'Cormorant Garamond', serif", marginTop: '5px' }}>
+          <p style={{ fontSize: '1.3rem', color: theme.errorText, fontFamily: "'Cormorant Garamond', serif", marginTop: '5px' }}>
             {error}
           </p>
         )}
@@ -146,7 +146,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '0.85rem',
+            fontSize: '1.2rem',
             color: theme.textLight,
             fontStyle: 'italic',
             marginTop: '10px',
@@ -172,7 +172,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
               key={p.id}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '0.85rem',
+                fontSize: '1.2rem',
                 color: theme.textLight,
                 lineHeight: 1.6,
               }}
@@ -181,7 +181,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
             </p>
           ))}
           {participants.length > 3 && (
-            <p style={{ color: theme.textMid, fontFamily: "'Cormorant Garamond', serif", fontSize: '0.82rem', marginTop: '4px' }}>
+            <p style={{ color: theme.textMid, fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem', marginTop: '4px' }}>
               …and {participants.length - 3} more
             </p>
           )}
@@ -199,7 +199,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
               padding: '11px',
               borderRadius: '6px',
               fontFamily: "'Cinzel Decorative', serif",
-              fontSize: '0.66rem',
+              fontSize: '1.3rem',
               cursor: 'pointer',
               letterSpacing: '0.04em',
             }}
@@ -216,7 +216,7 @@ const WhatsAppModal: React.FC<WhatsAppModalProps> = ({ participants, t, theme, o
               padding: '11px',
               borderRadius: '6px',
               fontFamily: "'Cinzel Decorative', serif",
-              fontSize: '0.66rem',
+              fontSize: '1.3rem',
               cursor: 'pointer',
               letterSpacing: '0.04em',
               boxShadow: '0 2px 10px rgba(37,211,102,0.3)',

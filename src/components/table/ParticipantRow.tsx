@@ -39,9 +39,9 @@ const ParticipantRow: React.FC<ParticipantRowProps> = ({
     background: 'transparent',
     border: 'none',
     borderBottom: `1px solid ${theme.inputBorder}`,
-    padding: '4px 6px',
+    padding: '6px 8px',
     fontFamily: "'Cormorant Garamond', serif",
-    fontSize: '1rem',
+    fontSize: '1.2rem',
     color: theme.inputText,
     width: '100%',
     outline: 'none',
@@ -50,23 +50,23 @@ const ParticipantRow: React.FC<ParticipantRowProps> = ({
   }
 
   const errStyle: React.CSSProperties = {
-    fontSize: '0.72rem', color: theme.errorText,
+    fontSize: '1.08rem', color: theme.errorText,
     fontFamily: "'Cormorant Garamond', serif", marginTop: '2px',
   }
 
   const labelStyle: React.CSSProperties = {
     fontFamily: "'Cinzel Decorative', serif",
-    fontSize: '0.58rem', color: theme.textMid,
+    fontSize: '1.2rem', color: theme.textMid,
     letterSpacing: '0.07em', display: 'block', marginBottom: '3px',
   }
 
   const badge = (
     <div style={{
-      minWidth: '28px', width: '28px', height: '28px', borderRadius: '50%',
+      minWidth: '32px', width: '32px', height: '32px', borderRadius: '50%',
       background: theme.badgeGradient,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: '#FDF6E3', fontFamily: "'Cinzel Decorative', serif",
-      fontSize: '0.6rem', flexShrink: 0, fontWeight: 700,
+      fontSize: '1.2rem', flexShrink: 0, fontWeight: 700,
     }}>
       {index + 1}
     </div>
@@ -154,7 +154,7 @@ const ParticipantRow: React.FC<ParticipantRowProps> = ({
   }
 
   const tdBase: React.CSSProperties = {
-    padding: '10px 12px', borderBottom: `1px solid ${theme.tableBorder}`, verticalAlign: 'middle',
+    padding: '13px 14px', borderBottom: `1px solid ${theme.tableBorder}`, verticalAlign: 'middle',
   }
 
   return (

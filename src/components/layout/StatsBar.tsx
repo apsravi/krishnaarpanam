@@ -49,7 +49,7 @@ const StatsBar: React.FC<StatsBarProps> = ({ participants, t, theme }) => {
             <div
               style={{
                 fontFamily: "'Cinzel Decorative', serif",
-                fontSize: 'clamp(1rem, 3vw, 1.8rem)',
+                fontSize: 'clamp(1.6rem,4vw,2.5rem)',
                 color,
                 fontWeight: 700,
                 lineHeight: 1,
@@ -60,7 +60,7 @@ const StatsBar: React.FC<StatsBarProps> = ({ participants, t, theme }) => {
             <div
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(0.55rem, 1.4vw, 0.7rem)',
+                fontSize: 'clamp(1rem,1.8vw,1.15rem)',
                 color: theme.textLight,
                 letterSpacing: '0.06em',
                 textTransform: 'uppercase',
@@ -80,7 +80,7 @@ const StatsBar: React.FC<StatsBarProps> = ({ participants, t, theme }) => {
           justifyContent: 'space-between',
           marginBottom: '6px',
           fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 'clamp(0.72rem, 1.6vw, 0.85rem)',
+          fontSize: 'clamp(1rem,1.8vw,1.1rem)',
           color: theme.textLight,
         }}
       >
@@ -90,7 +90,7 @@ const StatsBar: React.FC<StatsBarProps> = ({ participants, t, theme }) => {
 
       <div
         style={{
-          height: '7px',
+          height: '9px',
           background: theme.progressBg,
           borderRadius: '4px',
           overflow: 'hidden',
@@ -115,7 +115,7 @@ const StatsBar: React.FC<StatsBarProps> = ({ participants, t, theme }) => {
             marginTop: '8px',
             color: '#16A34A',
             fontFamily: "'Cinzel Decorative', serif",
-            fontSize: 'clamp(0.5rem, 1.3vw, 0.62rem)',
+            fontSize: 'clamp(0.8rem,1.5vw,0.9rem)',
             letterSpacing: '0.08em',
           }}
         >

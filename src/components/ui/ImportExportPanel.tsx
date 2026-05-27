@@ -59,9 +59,9 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
   }
 
   const inp: React.CSSProperties = {
-    width: '100%', padding: '10px 13px',
+    width: '100%', padding: '12px 15px',
     border: `1.5px solid ${theme.inputBorder}`, borderRadius: '8px',
-    fontFamily: "'Cormorant Garamond', serif", fontSize: '1rem',
+    fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem',
     color: theme.inputText, background: theme.inputBg,
     outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
   }
@@ -81,8 +81,8 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
       {iconBox(icon)}
       <div>
-        <h3 style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.62rem,1.5vw,0.76rem)', color: theme.text, letterSpacing: '0.05em' }}>{title}</h3>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.85rem', color: theme.textLight, fontStyle: 'italic' }}>{sub}</p>
+        <h3 style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.9rem,1.7vw,1.05rem)', color: theme.text, letterSpacing: '0.05em' }}>{title}</h3>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem', color: theme.textLight, fontStyle: 'italic' }}>{sub}</p>
       </div>
     </div>
   )
@@ -103,10 +103,10 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
             style={{ border: `2px dashed ${dragging ? theme.dropzoneBorderActive : theme.dropzoneBorder}`, borderRadius: '10px', padding: 'clamp(18px,4vw,26px)', textAlign: 'center', cursor: 'pointer', background: dragging ? theme.dropzoneBg : 'transparent', transition: 'all 0.2s' }}
           >
             <div style={{ fontSize: '2.2rem', marginBottom: '8px', opacity: 0.6 }}>📊</div>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.92rem', color: theme.textLight }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.08rem', color: theme.textLight }}>
               {importing ? t.importPanel.processing : t.importPanel.drop}
             </p>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.78rem', color: theme.textLight, marginTop: '4px', fontStyle: 'italic' }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: theme.textLight, marginTop: '4px', fontStyle: 'italic' }}>
               {t.importPanel.fmt}
             </p>
           </div>
@@ -116,7 +116,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
 
           {result && (
             <div style={{ marginTop: '12px', padding: '10px 14px', borderRadius: '8px', background: result.success ? theme.successBg : theme.errorBg, border: `1px solid ${result.success ? theme.successBorder : theme.errorBorder}` }}>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.9rem', color: result.success ? theme.successText : theme.errorText }}>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: result.success ? theme.successText : theme.errorText }}>
                 {result.success ? '✓' : '✗'} {result.msg}
               </span>
             </div>
@@ -133,7 +133,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
 
           {/* ── Custom filename input ── */}
           <div style={{ marginBottom: '14px' }}>
-            <label style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.6rem', color: theme.textMid, letterSpacing: '0.07em', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <label style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.2rem', color: theme.textMid, letterSpacing: '0.07em', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '5px' }}>
               <FileText size={11} /> File Name
             </label>
             <input
@@ -146,14 +146,14 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
               aria-label="Custom export filename"
             />
             {/* Preview */}
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.78rem', color: theme.textLight, marginTop: '5px', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: theme.textLight, marginTop: '5px', fontStyle: 'italic', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               📄 {previewName}
             </p>
           </div>
 
           {/* Export options */}
           <div style={{ background: theme.statsBg, borderRadius: '10px', padding: '14px', marginBottom: '14px', border: `1px solid ${theme.statsBorder}` }}>
-            <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.6rem', color: theme.textMid, letterSpacing: '0.07em', marginBottom: '10px' }}>
+            <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.2rem', color: theme.textMid, letterSpacing: '0.07em', marginBottom: '10px' }}>
               {t.exportPanel.exportOptions}
             </p>
             {([
@@ -165,7 +165,7 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
                 <input type="checkbox" checked={options[key] as boolean}
                   onChange={e => setOptions(o => ({ ...o, [key]: e.target.checked }))}
                   style={{ accentColor: theme.checkboxAccent }} />
-                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.92rem', color: theme.text }}>{label}</span>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.08rem', color: theme.text }}>{label}</span>
               </label>
             ))}
           </div>
@@ -175,20 +175,20 @@ const ImportExportPanel: React.FC<ImportExportPanelProps> = ({
             <button
               onClick={handleExport}
               disabled={participants.length === 0}
-              style={{ width: '100%', background: participants.length === 0 ? 'rgba(139,26,26,0.3)' : theme.btnSecondaryBg, color: theme.btnSecondaryText, border: 'none', padding: '12px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.58rem,1.4vw,0.7rem)', cursor: participants.length === 0 ? 'not-allowed' : 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', opacity: participants.length === 0 ? 0.5 : 1, boxShadow: participants.length > 0 ? '0 2px 8px rgba(139,26,26,0.25)' : 'none' }}>
+              style={{ width: '100%', background: participants.length === 0 ? 'rgba(139,26,26,0.3)' : theme.btnSecondaryBg, color: theme.btnSecondaryText, border: 'none', padding: '14px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(1.05rem,1.8vw,1.2rem)', cursor: participants.length === 0 ? 'not-allowed' : 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', opacity: participants.length === 0 ? 0.5 : 1, boxShadow: participants.length > 0 ? '0 2px 8px rgba(139,26,26,0.25)' : 'none' }}>
               <Download size={14} /> {t.exportPanel.download}
             </button>
 
             <button
               onClick={() => participants.length > 0 && setShowWA(true)}
               disabled={participants.length === 0}
-              style={{ width: '100%', background: participants.length === 0 ? 'rgba(37,211,102,0.2)' : 'linear-gradient(135deg, #25D366, #128C7E)', color: '#fff', border: 'none', padding: '12px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.58rem,1.4vw,0.7rem)', cursor: participants.length === 0 ? 'not-allowed' : 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', opacity: participants.length === 0 ? 0.5 : 1, boxShadow: participants.length > 0 ? '0 2px 8px rgba(37,211,102,0.3)' : 'none' }}>
+              style={{ width: '100%', background: participants.length === 0 ? 'rgba(37,211,102,0.2)' : 'linear-gradient(135deg, #25D366, #128C7E)', color: '#fff', border: 'none', padding: '14px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(1.05rem,1.8vw,1.2rem)', cursor: participants.length === 0 ? 'not-allowed' : 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', opacity: participants.length === 0 ? 0.5 : 1, boxShadow: participants.length > 0 ? '0 2px 8px rgba(37,211,102,0.3)' : 'none' }}>
               📲 {t.exportPanel.share}
             </button>
           </div>
 
           {participants.length === 0 && (
-            <p style={{ textAlign: 'center', marginTop: '8px', fontFamily: "'Cormorant Garamond', serif", fontSize: '0.82rem', color: theme.textLight, fontStyle: 'italic' }}>
+            <p style={{ textAlign: 'center', marginTop: '8px', fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem', color: theme.textLight, fontStyle: 'italic' }}>
               {t.exportPanel.noParticipants}
             </p>
           )}

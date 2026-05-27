@@ -55,7 +55,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
   const inp: React.CSSProperties = {
     background: theme.inputBg, border: `1px solid ${theme.inputBorder}`,
     borderRadius: '6px', padding: '7px 10px',
-    fontFamily: "'Cormorant Garamond', serif", fontSize: '0.95rem',
+    fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem',
     color: theme.inputText, outline: 'none', width: '100%', boxSizing: 'border-box',
   }
 
@@ -68,7 +68,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
     border: `1px solid ${LOCKED.includes(col.id) ? 'rgba(201,168,76,0.5)' : theme.statsBorder}`,
     borderRadius: '20px',
     fontFamily: "'Cormorant Garamond', serif",
-    fontSize: '0.88rem',
+    fontSize: '1.3rem',
     color: theme.text,
     cursor: LOCKED.includes(col.id) ? 'default' : 'default',
     flexShrink: 0,
@@ -83,7 +83,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
           <div key={col.id} style={chipStyle(col)}>
             {/* Lock icon for required cols */}
             {LOCKED.includes(col.id) ? (
-              <span style={{ fontSize: '0.7rem', opacity: 0.6 }}>🔒</span>
+              <span style={{ fontSize: '1.3rem', opacity: 0.6 }}>🔒</span>
             ) : null}
 
             {/* Label — click to rename custom */}
@@ -94,7 +94,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
                 onBlur={() => commitEdit(col.id)}
                 onKeyDown={e => e.key === 'Enter' && commitEdit(col.id)}
                 autoFocus
-                style={{ ...inp, width: '90px', padding: '2px 6px', fontSize: '0.85rem', display: 'inline' }}
+                style={{ ...inp, width: '90px', padding: '2px 6px', fontSize: '1.2rem', display: 'inline' }}
               />
             ) : (
               <span
@@ -132,7 +132,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
                 padding: '5px 10px',
                 background: theme.statsBg, border: `1px solid ${theme.statsBorder}`,
                 borderRadius: '20px', cursor: 'pointer',
-                fontFamily: "'Cormorant Garamond', serif", fontSize: '0.85rem',
+                fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem',
                 color: theme.textMid,
               }}
             >
@@ -150,7 +150,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
                   borderRadius: '10px', boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
                   minWidth: '180px', overflow: 'hidden',
                 }}>
-                  <p style={{ padding: '8px 12px', fontFamily: "'Cinzel Decorative',serif", fontSize: '0.58rem', color: theme.textMid, letterSpacing: '0.06em', borderBottom: `1px solid ${theme.tableBorder}` }}>
+                  <p style={{ padding: '8px 12px', fontFamily: "'Cinzel Decorative',serif", fontSize: '1.2rem', color: theme.textMid, letterSpacing: '0.06em', borderBottom: `1px solid ${theme.tableBorder}` }}>
                     Hidden Columns
                   </p>
                   {hiddenCols.map(col => (
@@ -158,7 +158,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
                       key={col.id}
                       style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', gap: '8px', borderBottom: `1px solid ${theme.tableBorder}` }}
                     >
-                      <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '0.92rem', color: theme.text }}>{col.label}</span>
+                      <span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '1.08rem', color: theme.text }}>{col.label}</span>
                       <div style={{ display: 'flex', gap: '6px' }}>
                         {/* Restore to view */}
                         <button
@@ -198,7 +198,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
             border: `1px solid ${theme.btnGhostBorder}`,
             padding: '9px 14px', borderRadius: '6px',
             fontFamily: "'Cinzel Decorative',serif",
-            fontSize: 'clamp(0.54rem,1.3vw,0.66rem)', letterSpacing: '0.04em',
+            fontSize: 'clamp(0.84rem,1.5vw,0.96rem)', letterSpacing: '0.04em',
             cursor: 'pointer', whiteSpace: 'nowrap',
           }}
         >
@@ -220,7 +220,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 16px', borderBottom: `1px solid ${theme.surfaceBorder}`, background: theme.statsBg }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Columns size={14} color={theme.textMid} />
-                  <span style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: '0.7rem', color: theme.text, letterSpacing: '0.05em' }}>
+                  <span style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: '1.3rem', color: theme.text, letterSpacing: '0.05em' }}>
                     Manage Columns
                   </span>
                 </div>
@@ -251,16 +251,16 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
                           onBlur={() => commitEdit(col.id)}
                           onKeyDown={e => e.key === 'Enter' && commitEdit(col.id)}
                           autoFocus
-                          style={{ ...inp, flex: 1, padding: '4px 8px', fontSize: '0.88rem' }}
+                          style={{ ...inp, flex: 1, padding: '4px 8px', fontSize: '1.3rem' }}
                         />
                       ) : (
                         <span
                           onClick={() => col.isCustom && startEdit(col)}
-                          style={{ flex: 1, fontFamily: "'Cormorant Garamond',serif", fontSize: '0.95rem', color: theme.text, cursor: col.isCustom ? 'text' : 'default' }}
+                          style={{ flex: 1, fontFamily: "'Cormorant Garamond',serif", fontSize: '1.3rem', color: theme.text, cursor: col.isCustom ? 'text' : 'default' }}
                         >
                           {col.label}
-                          {isLocked && <span style={{ color: '#FF6B00', marginLeft: '4px', fontSize: '0.72rem' }}>locked</span>}
-                          {col.isCustom && <span style={{ color: theme.textLight, fontSize: '0.7rem', marginLeft: '6px', fontStyle: 'italic' }}>custom</span>}
+                          {isLocked && <span style={{ color: '#FF6B00', marginLeft: '4px', fontSize: '1.08rem' }}>locked</span>}
+                          {col.isCustom && <span style={{ color: theme.textLight, fontSize: '1.3rem', marginLeft: '6px', fontStyle: 'italic' }}>custom</span>}
                         </span>
                       )}
 
@@ -292,7 +292,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
 
               {/* Add new column */}
               <div style={{ padding: '12px 16px', borderTop: `1px solid ${theme.surfaceBorder}`, background: theme.statsBg }}>
-                <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: '0.58rem', color: theme.textMid, letterSpacing: '0.07em', marginBottom: '8px' }}>
+                <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: '1.2rem', color: theme.textMid, letterSpacing: '0.07em', marginBottom: '8px' }}>
                   Add Custom Column
                 </p>
                 <div style={{ display: 'flex', gap: '6px', marginBottom: '6px' }}>
@@ -319,7 +319,7 @@ const ColumnManager: React.FC<ColumnManagerProps> = ({
                     <Plus size={14} />
                   </button>
                 </div>
-                {addError && <p style={{ fontSize: '0.75rem', color: theme.errorText, fontFamily: "'Cormorant Garamond',serif" }}>{addError}</p>}
+                {addError && <p style={{ fontSize: '1.3rem', color: theme.errorText, fontFamily: "'Cormorant Garamond',serif" }}>{addError}</p>}
               </div>
             </div>
           </>

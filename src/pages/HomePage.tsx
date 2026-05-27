@@ -68,9 +68,9 @@ const HomePage: React.FC = () => {
   const btnGhost: React.CSSProperties = {
     background: theme.btnGhostBg, color: theme.btnGhostText,
     border: `1px solid ${theme.btnGhostBorder}`,
-    padding: '9px 16px', borderRadius: '6px',
+    padding: '11px 18px', borderRadius: '8px',
     fontFamily: "'Cinzel Decorative', serif",
-    fontSize: 'clamp(0.56rem,1.4vw,0.68rem)',
+    fontSize: 'clamp(0.86rem,1.6vw,1rem)',
     letterSpacing: '0.04em', cursor: 'pointer',
     display: 'inline-flex', alignItems: 'center', gap: '6px',
     whiteSpace: 'nowrap' as const, transition: 'all 0.2s',
@@ -106,7 +106,7 @@ const HomePage: React.FC = () => {
               background: theme.btnPrimaryBg, color: theme.btnPrimaryText, border: 'none',
               padding: '9px 18px', borderRadius: '6px',
               fontFamily: "'Cinzel Decorative', serif",
-              fontSize: 'clamp(0.56rem,1.4vw,0.7rem)', letterSpacing: '0.04em',
+              fontSize: 'clamp(0.86rem,1.6vw,1rem)', letterSpacing: '0.04em',
               cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px',
               whiteSpace: 'nowrap', boxShadow: '0 2px 10px rgba(255,107,0,0.28)',
             }}
@@ -135,14 +135,14 @@ const HomePage: React.FC = () => {
               border: `1px solid ${remainingSlots() === 0 ? 'rgba(220,38,38,0.35)' : theme.statsBorder}`,
               borderRadius: '20px',
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '0.85rem',
+              fontSize: '1.2rem',
               color: remainingSlots() === 0 ? theme.btnDangerText : theme.textMid,
             }}>
               🔒 {remainingSlots() === 0 ? 'Cap reached' : `${remainingSlots()} of ${rowCap} left`}
               <button
                 onClick={() => setRowCap(null)}
                 title="Remove row cap"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '0.75rem', padding: '0 2px', lineHeight: 1 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '1.3rem', padding: '0 2px', lineHeight: 1 }}
               >✕</button>
             </div>
           )}
@@ -180,7 +180,7 @@ const HomePage: React.FC = () => {
               style={{
                 width: '100%', padding: '9px 32px 9px 32px',
                 border: `1.5px solid ${theme.inputBorder}`, borderRadius: '8px',
-                fontFamily: "'Cormorant Garamond', serif", fontSize: '0.95rem',
+                fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem',
                 background: theme.inputBg, color: theme.inputText, outline: 'none',
                 boxSizing: 'border-box', transition: 'border-color 0.2s',
               }}
@@ -215,10 +215,10 @@ const HomePage: React.FC = () => {
               onClick={() => setTab(tb.id)}
               style={{
                 flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                padding: isMobile ? '9px 4px' : '10px 8px', borderRadius: '8px',
+                padding: isMobile ? '11px 6px' : '12px 10px', borderRadius: '8px',
                 border: 'none', cursor: 'pointer',
                 fontFamily: "'Cinzel Decorative', serif",
-                fontSize: 'clamp(0.5rem,1.3vw,0.64rem)', letterSpacing: '0.04em',
+                fontSize: 'clamp(0.8rem,1.5vw,0.9rem)', letterSpacing: '0.04em',
                 transition: 'all 0.2s',
                 background: tab === tb.id ? 'linear-gradient(135deg,#8B1A1A,#C9A84C)' : 'transparent',
                 color: tab === tb.id ? '#FDF6E3' : theme.textMid,
@@ -320,7 +320,7 @@ const HomePage: React.FC = () => {
             <div style={{ textAlign: 'center', minWidth: 0 }}>
               <p style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(0.92rem,2vw,1.1rem)',
+                fontSize: 'clamp(1.1rem,2.2vw,1.3rem)',
                 color: theme.text, fontStyle: 'italic',
                 lineHeight: 1.7, marginBottom: '6px',
               }}>
@@ -328,7 +328,7 @@ const HomePage: React.FC = () => {
               </p>
               <p style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(0.8rem,1.6vw,0.96rem)',
+                fontSize: 'clamp(1.05rem,1.8vw,1.2rem)',
                 color: '#C9A84C', letterSpacing: '0.04em',
                 lineHeight: 1.5, fontWeight: 500, marginBottom: '6px',
               }}>
@@ -336,7 +336,7 @@ const HomePage: React.FC = () => {
               </p>
               <p style={{
                 fontFamily: "'Cinzel Decorative', serif",
-                fontSize: 'clamp(0.38rem,0.9vw,0.5rem)',
+                fontSize: 'clamp(0.76rem,1.1vw,0.88rem)',
                 color: theme.textLight, letterSpacing: '0.1em', opacity: 0.6,
               }}>
                 ✦ KRISHNAARPANAM · 100 DASAKAMS · 1036 SHLOKAS · GURUVAYURAPPAN ✦
@@ -354,13 +354,13 @@ const HomePage: React.FC = () => {
         borderTop: `1px solid ${theme.footerBorder}`,
         background: theme.footerBg, marginTop: '24px',
       }}>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.72rem,1.8vw,0.88rem)', color: theme.textLight, marginBottom: '2px' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.15rem,2.2vw,1.35rem)', color: theme.textLight, marginBottom: '2px' }}>
           {t.footer}
         </p>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.68rem,1.6vw,0.82rem)', color: '#C9A84C', marginBottom: '4px', fontStyle: 'italic' }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(0.96rem,1.8vw,1.1rem)', color: '#C9A84C', marginBottom: '4px', fontStyle: 'italic' }}>
           {(t as any).devotionLine}
         </p>
-        <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.44rem,1.1vw,0.56rem)', color: theme.textMid, letterSpacing: '0.06em' }}>
+        <p style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: 'clamp(0.76rem,1.3vw,0.9rem)', color: theme.textMid, letterSpacing: '0.06em' }}>
           {t.copyright}
         </p>
       </footer>
@@ -385,15 +385,15 @@ const HomePage: React.FC = () => {
         >
           <div style={{ background: theme.modalBg, borderRadius: '16px', border: `1px solid ${theme.btnDangerBorder}`, boxShadow: '0 20px 60px rgba(0,0,0,0.35)', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
             <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>⚠️</div>
-            <h3 style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.88rem', color: theme.text, marginBottom: '10px' }}>{t.clear.title}</h3>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.95rem', color: theme.textLight, marginBottom: '22px', lineHeight: 1.6 }}>
+            <h3 style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', color: theme.text, marginBottom: '10px' }}>{t.clear.title}</h3>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: theme.textLight, marginBottom: '22px', lineHeight: 1.6 }}>
               {t.clear.body} {participants.length} {t.clear.bodyEnd}
             </p>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => setShowClearConfirm(false)} style={{ flex: 1, background: theme.btnGhostBg, color: theme.btnGhostText, border: `1px solid ${theme.btnGhostBorder}`, padding: '11px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '0.66rem', cursor: 'pointer', letterSpacing: '0.04em' }}>
+              <button onClick={() => setShowClearConfirm(false)} style={{ flex: 1, background: theme.btnGhostBg, color: theme.btnGhostText, border: `1px solid ${theme.btnGhostBorder}`, padding: '11px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', cursor: 'pointer', letterSpacing: '0.04em' }}>
                 {t.clear.cancel}
               </button>
-              <button onClick={() => { clearAll(); setShowClearConfirm(false) }} style={{ flex: 1, background: 'linear-gradient(135deg,#DC2626,#EF4444)', color: '#fff', border: 'none', padding: '11px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '0.66rem', cursor: 'pointer', letterSpacing: '0.04em' }}>
+              <button onClick={() => { clearAll(); setShowClearConfirm(false) }} style={{ flex: 1, background: 'linear-gradient(135deg,#DC2626,#EF4444)', color: '#fff', border: 'none', padding: '11px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', cursor: 'pointer', letterSpacing: '0.04em' }}>
                 {t.clear.confirm}
               </button>
             </div>

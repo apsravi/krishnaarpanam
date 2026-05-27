@@ -47,7 +47,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
           <p
             style={{
               fontFamily: "'Cinzel Decorative', serif",
-              fontSize: 'clamp(0.6rem, 1.5vw, 0.72rem)',
+              fontSize: 'clamp(0.9rem,1.7vw,1.05rem)',
               color: theme.textMid,
               letterSpacing: '0.07em',
               marginBottom: '2px',
@@ -58,7 +58,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
           <p
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(0.75rem, 1.8vw, 0.88rem)',
+              fontSize: 'clamp(1.15rem,2.2vw,1.35rem)',
               color: theme.textLight,
               fontStyle: 'italic',
             }}
@@ -75,9 +75,9 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
             border: `1px solid ${theme.btnDangerBorder}`,
             borderRadius: '6px',
             color: theme.btnDangerText,
-            padding: '7px 14px',
+            padding: '10px 18px',
             fontFamily: "'Cinzel Decorative', serif",
-            fontSize: 'clamp(0.52rem, 1.3vw, 0.62rem)',
+            fontSize: 'clamp(0.82rem,1.5vw,0.92rem)',
             letterSpacing: '0.04em',
             cursor: 'pointer',
             display: 'inline-flex',
@@ -120,7 +120,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
             <span
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(0.75rem, 1.8vw, 0.88rem)',
+                fontSize: 'clamp(1.15rem,2.2vw,1.35rem)',
                 color: theme.textLight,
               }}
             >
@@ -181,7 +181,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
                 background: bg,
                 border: `1px solid ${border}`,
                 fontFamily: "'Cinzel Decorative', serif",
-                fontSize: 'clamp(0.48rem, 1.2vw, 0.6rem)',
+                fontSize: 'clamp(0.82rem,1.5vw,0.96rem)',
                 color,
                 cursor: assignee ? 'pointer' : 'default',
                 transition: 'all 0.12s',
@@ -207,7 +207,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
             borderRadius: '6px',
             color: '#FDF6E3',
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '0.95rem',
+            fontSize: '1.3rem',
             display: 'inline-block',
             backdropFilter: 'blur(4px)',
           }}
@@ -253,7 +253,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
             <h3
               style={{
                 fontFamily: "'Cinzel Decorative', serif",
-                fontSize: '0.88rem',
+                fontSize: '1.3rem',
                 color: theme.text,
                 marginBottom: '10px',
               }}
@@ -263,7 +263,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
             <p
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: '0.95rem',
+                fontSize: '1.3rem',
                 color: theme.textLight,
                 lineHeight: 1.6,
                 marginBottom: '22px',
@@ -282,7 +282,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
                   padding: '10px',
                   borderRadius: '6px',
                   fontFamily: "'Cinzel Decorative', serif",
-                  fontSize: '0.66rem',
+                  fontSize: '1.3rem',
                   cursor: 'pointer',
                   letterSpacing: '0.04em',
                 }}
@@ -299,7 +299,7 @@ const DasakamGrid: React.FC<DasakamGridProps> = ({
                   padding: '10px',
                   borderRadius: '6px',
                   fontFamily: "'Cinzel Decorative', serif",
-                  fontSize: '0.66rem',
+                  fontSize: '1.3rem',
                   cursor: 'pointer',
                   letterSpacing: '0.04em',
                 }}

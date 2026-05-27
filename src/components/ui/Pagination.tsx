@@ -84,7 +84,7 @@ const Pagination: React.FC<PaginationProps> = ({
       {/* Info */}
       <div style={{
         fontFamily: "'Cormorant Garamond', serif",
-        fontSize: '0.92rem',
+        fontSize: '1.08rem',
         color: theme.textLight,
         flexShrink: 0,
       }}>
@@ -104,7 +104,7 @@ const Pagination: React.FC<PaginationProps> = ({
             borderRadius: '6px',
             color: theme.text,
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '0.88rem',
+            fontSize: '1.3rem',
             padding: '4px 8px',
             cursor: 'pointer',
             outline: 'none',
@@ -141,7 +141,7 @@ const Pagination: React.FC<PaginationProps> = ({
           p === '...' ? (
             <span
               key={`ellipsis-${i}`}
-              style={{ color: theme.textLight, fontFamily: "'Cormorant Garamond', serif", fontSize: '0.9rem', padding: '0 2px' }}
+              style={{ color: theme.textLight, fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', padding: '0 2px' }}
             >
               …
             </span>
@@ -153,7 +153,7 @@ const Pagination: React.FC<PaginationProps> = ({
               aria-label={`Page ${p}`}
               aria-current={p === page ? 'page' : undefined}
             >
-              <span style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.6rem' }}>{p}</span>
+              <span style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.15rem' }}>{p}</span>
             </button>
           )
         )}

@@ -70,7 +70,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message = 'Generatingâ€
         <div>
           <p style={{
             fontFamily: "'Cinzel Decorative', serif",
-            fontSize: '0.78rem',
+            fontSize: '1.3rem',
             color: theme.textMid,
             letterSpacing: '0.08em',
             marginBottom: '4px',
@@ -79,7 +79,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message = 'Generatingâ€
           </p>
           <p style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '0.85rem',
+            fontSize: '1.2rem',
             color: theme.textLight,
             fontStyle: 'italic',
           }}>

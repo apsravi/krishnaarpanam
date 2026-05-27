@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
           <button
             onClick={() => setLang(lang === 'en' ? 'ta' : 'en')}
             aria-label="Toggle language"
-            style={{ background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)', borderRadius: '20px', color: '#C9A84C', padding: '5px 13px', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.48rem,1.4vw,0.6rem)', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.2s' }}>
+            style={{ background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)', borderRadius: '20px', color: '#C9A84C', padding: '5px 13px', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.76rem,1.6vw,0.9rem)', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.2s' }}>
             {t.langToggle}
           </button>
           <button
@@ -131,26 +131,26 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
           </div>
 
           {/* Sanskrit subtitle */}
-          <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.44rem,1.4vw,0.68rem)', color: 'rgba(201,168,76,0.9)', letterSpacing: '0.16em', marginBottom: '6px' }}>
+          <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.72rem,1.6vw,0.88rem)', color: 'rgba(201,168,76,0.9)', letterSpacing: '0.16em', marginBottom: '6px' }}>
             {lang === 'en' ? 'நாராயணீயம் · Nārāyaṇīyam' : 'Narayaneeyam · நாராயணீயம்'}
           </p>
 
           {/* App name */}
-          <h1 style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(1.3rem,5vw,2.8rem)', color: '#FDF6E3', letterSpacing: '0.04em', textShadow: '0 2px 22px rgba(201,168,76,0.5)', margin: 0, lineHeight: 1.15 }}>
+          <h1 style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(1.6rem,5.5vw,3.2rem)', color: '#FDF6E3', letterSpacing: '0.04em', textShadow: '0 2px 22px rgba(201,168,76,0.5)', margin: 0, lineHeight: 1.15 }}>
             {t.appName}
           </h1>
 
           {/* Tagline */}
-          <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.44rem,1.4vw,0.72rem)', color: '#C9A84C', letterSpacing: '0.13em', marginTop: '5px' }}>
+          <p style={{ fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(1rem,1.9vw,1.1rem)', color: '#C9A84C', letterSpacing: '0.13em', marginTop: '5px' }}>
             {t.appSub}
           </p>
 
           {/* Divider */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
             <div style={{ height: '1px', width: 'clamp(24px,5vw,54px)', background: 'linear-gradient(90deg,transparent,#C9A84C)' }} />
-            <span style={{ color: '#C9A84C', fontSize: '0.9rem' }}>✦</span>
-            <span style={{ color: '#FF6B00', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.44rem,1.1vw,0.58rem)', letterSpacing: '0.15em' }}>{t.place}</span>
-            <span style={{ color: '#C9A84C', fontSize: '0.9rem' }}>✦</span>
+            <span style={{ color: '#C9A84C', fontSize: '1.3rem' }}>✦</span>
+            <span style={{ color: '#FF6B00', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.72rem,1.4vw,0.85rem)', letterSpacing: '0.15em' }}>{t.place}</span>
+            <span style={{ color: '#C9A84C', fontSize: '1.3rem' }}>✦</span>
             <div style={{ height: '1px', width: 'clamp(24px,5vw,54px)', background: 'linear-gradient(90deg,#C9A84C,transparent)' }} />
           </div>
         </div>

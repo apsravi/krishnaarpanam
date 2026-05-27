@@ -46,7 +46,7 @@ const GenerateModal: React.FC<GenerateModalProps> = ({
   const inpStyle: React.CSSProperties = {
     width: '100%', padding: '12px 14px',
     border: `1.5px solid ${theme.inputBorder}`, borderRadius: '8px',
-    fontFamily: "'Cormorant Garamond', serif", fontSize: '1.1rem',
+    fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem',
     color: theme.inputText, background: theme.inputBg,
     outline: 'none', boxSizing: 'border-box',
   }
@@ -64,23 +64,23 @@ const GenerateModal: React.FC<GenerateModalProps> = ({
             <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: theme.badgeGradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Users size={18} color="#FDF6E3" />
             </div>
-            <h3 style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.85rem', color: theme.text, letterSpacing: '0.04em' }}>{t.generate.title}</h3>
+            <h3 style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', color: theme.text, letterSpacing: '0.04em' }}>{t.generate.title}</h3>
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '1.2rem', lineHeight: 1 }}>✕</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: theme.textLight, fontSize: '1.3rem', lineHeight: 1 }}>✕</button>
         </div>
 
         {/* Cap notice — if one already exists */}
         {existingCap !== null && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 14px', background: theme.statsBg, border: `1px solid ${theme.statsBorder}`, borderRadius: '8px', marginBottom: '16px' }}>
             <Lock size={14} color="#C9A84C" />
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.9rem', color: theme.textMid }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: theme.textMid }}>
               Row cap active: <strong>{existingCap}</strong> total · <strong>{remaining}</strong> slot{remaining !== 1 ? 's' : ''} remaining
             </p>
           </div>
         )}
 
         {/* Count input */}
-        <label style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.62rem', color: theme.textMid, letterSpacing: '0.08em', display: 'block', marginBottom: '8px' }}>
+        <label style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', color: theme.textMid, letterSpacing: '0.08em', display: 'block', marginBottom: '8px' }}>
           {t.generate.countLabel}
         </label>
         <input
@@ -93,7 +93,7 @@ const GenerateModal: React.FC<GenerateModalProps> = ({
           autoFocus
           style={inpStyle}
         />
-        {error && <p style={{ fontSize: '0.78rem', color: theme.errorText, fontFamily: "'Cormorant Garamond', serif", marginTop: '6px' }}>{error}</p>}
+        {error && <p style={{ fontSize: '1.3rem', color: theme.errorText, fontFamily: "'Cormorant Garamond', serif", marginTop: '6px' }}>{error}</p>}
 
         {/* Lock rows toggle */}
         <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', marginTop: '14px', padding: '12px', background: theme.statsBg, borderRadius: '8px', border: `1px solid ${theme.statsBorder}` }}>
@@ -104,10 +104,10 @@ const GenerateModal: React.FC<GenerateModalProps> = ({
             style={{ accentColor: '#C9A84C', marginTop: '3px', flexShrink: 0 }}
           />
           <div>
-            <div style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.62rem', color: theme.textMid, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <div style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', color: theme.textMid, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '5px' }}>
               <Lock size={11} /> Set as maximum row limit
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.84rem', color: theme.textLight, fontStyle: 'italic', marginTop: '3px' }}>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: theme.textLight, fontStyle: 'italic', marginTop: '3px' }}>
               {count && parseInt(count) > 0
                 ? `App will allow exactly ${currentCount + parseInt(count)} rows total — no more can be added`
                 : 'Once set, the app will not allow more rows to be added beyond this number'}
@@ -124,10 +124,10 @@ const GenerateModal: React.FC<GenerateModalProps> = ({
             style={{ accentColor: '#C9A84C', marginTop: '3px', flexShrink: 0 }}
           />
           <div>
-            <div style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '0.62rem', color: theme.textMid, letterSpacing: '0.05em' }}>
+            <div style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', color: theme.textMid, letterSpacing: '0.05em' }}>
               {t.generate.autoLabel}
             </div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '0.84rem', color: theme.textLight, fontStyle: 'italic', marginTop: '3px' }}>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.3rem', color: theme.textLight, fontStyle: 'italic', marginTop: '3px' }}>
               {t.generate.autoSub}
             </div>
           </div>
@@ -135,10 +135,10 @@ const GenerateModal: React.FC<GenerateModalProps> = ({
 
         {/* Actions */}
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button onClick={onClose} style={{ flex: 1, background: theme.btnGhostBg, color: theme.btnGhostText, border: `1px solid ${theme.btnGhostBorder}`, padding: '11px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '0.66rem', cursor: 'pointer', letterSpacing: '0.04em' }}>
+          <button onClick={onClose} style={{ flex: 1, background: theme.btnGhostBg, color: theme.btnGhostText, border: `1px solid ${theme.btnGhostBorder}`, padding: '13px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', cursor: 'pointer', letterSpacing: '0.04em' }}>
             {t.generate.cancel}
           </button>
-          <button onClick={handleSubmit} style={{ flex: 2, background: theme.btnPrimaryBg, color: theme.btnPrimaryText, border: 'none', padding: '11px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '0.66rem', cursor: 'pointer', letterSpacing: '0.04em', boxShadow: '0 2px 10px rgba(255,107,0,0.3)' }}>
+          <button onClick={handleSubmit} style={{ flex: 2, background: theme.btnPrimaryBg, color: theme.btnPrimaryText, border: 'none', padding: '13px', borderRadius: '6px', fontFamily: "'Cinzel Decorative', serif", fontSize: '1.3rem', cursor: 'pointer', letterSpacing: '0.04em', boxShadow: '0 2px 10px rgba(255,107,0,0.3)' }}>
             {t.generate.submit}
           </button>
         </div>
