@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Users, Grid3X3, FileSpreadsheet, Zap, Search, Trash2, X } from 'lucide-react'
+import { Users, Grid3X3, FileSpreadsheet, Zap, Search, Trash2, X, ClipboardPaste } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import StatsBar from '@/components/layout/StatsBar'
 import ParticipantTable from '@/components/table/ParticipantTable'
@@ -8,14 +8,18 @@ import ImportExportPanel from '@/components/ui/ImportExportPanel'
 import GenerateModal from '@/components/ui/GenerateModal'
 import ColumnManager from '@/components/ui/ColumnManager'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
+import PasteNamesModal from '@/components/ui/PasteNamesModal'
 import { useStore } from '@/store'
 import { T } from '@/utils/i18n'
 import { getTheme } from '@/utils/theme'
 import type { Participant, Column } from '@/types'
+import { generateId } from '@/utils/id'
 
 type Tab = 'participants' | 'grid' | 'import-export'
 
-const HomePage: React.FC = () => {
+interface HomePageProps { onSignOut: () => void }
+
+const HomePage: React.FC<HomePageProps> = ({ onSignOut }) => {
   const {
     participants,
     lang, dark, searchQuery,
@@ -36,6 +40,7 @@ const HomePage: React.FC = () => {
   const [tab, setTab] = useState<Tab>('participants')
   const [showGenModal, setShowGenModal] = useState(false)
   const [showClearConfirm, setShowClearConfirm] = useState(false)
+  const [showPasteModal, setShowPasteModal] = useState(false)
   const [windowW, setWindowW] = useState(typeof window !== 'undefined' ? window.innerWidth : 800)
 
   useEffect(() => {
@@ -53,6 +58,18 @@ const HomePage: React.FC = () => {
 
   const handleImport = useCallback((imported: Participant[]) => {
     appendParticipants(imported)
+  }, [appendParticipants])
+
+  const handlePasteNames = useCallback((names: string[]) => {
+    const rows = names.map(name => ({
+      id: generateId(),
+      name,
+      dasakams: [] as number[],
+      contactNumber: '',
+      notes: '',
+      createdAt: new Date().toISOString(),
+    }))
+    appendParticipants(rows)
   }, [appendParticipants])
 
   const filtered = filteredParticipants()
@@ -86,7 +103,7 @@ const HomePage: React.FC = () => {
       {isLoading && <LoadingOverlay message="Generating rows…" theme={theme} />}
 
       {/* Header */}
-      <Header lang={lang} setLang={setLang} dark={dark} setDark={setDark} t={t} theme={theme} />
+      <Header lang={lang} setLang={setLang} dark={dark} setDark={setDark} onSignOut={onSignOut} t={t} theme={theme} />
 
       {/* Main */}
       <main style={{
@@ -112,6 +129,16 @@ const HomePage: React.FC = () => {
             }}
           >
             <Users size={14} /> {t.toolbar.generate}
+          </button>
+
+          {/* Paste names */}
+          <button
+            onClick={() => setShowPasteModal(true)}
+            style={{ ...btnGhost }}
+            title="Paste a list of names"
+          >
+            <ClipboardPaste size={14} />
+            {isMobile ? '' : 'Paste Names'}
           </button>
 
           {/* Add one — respects row cap */}
@@ -364,6 +391,18 @@ const HomePage: React.FC = () => {
           {t.copyright}
         </p>
       </footer>
+
+      {/* Paste names modal */}
+      {showPasteModal && (
+        <PasteNamesModal
+          onAdd={handlePasteNames}
+          onClose={() => setShowPasteModal(false)}
+          existingCount={participants.length}
+          rowCap={rowCap}
+          theme={theme}
+          t={t}
+        />
+      )}
 
       {/* Generate modal */}
       {showGenModal && (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Sun, Moon } from 'lucide-react'
+import { Sun, Moon, LogOut } from 'lucide-react'
 import { GURUVAYURAPPAN_COLOR_IMG } from '@/assets/guruvayurappan_color'
 import { GURUVAYURAPPAN_IMG } from '@/assets/guruvayurappan'
 import type { ThemeTokens } from '@/utils/theme'
@@ -11,18 +11,35 @@ interface HeaderProps {
   setLang: (l: Lang) => void
   dark: boolean
   setDark: (d: boolean) => void
+  onSignOut: () => void
   t: Translations
   theme: ThemeTokens
 }
 
 const LOGO_SIZE = 'clamp(76px, 13vw, 108px)'
 
-const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme }) => {
+const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, onSignOut, t, theme }) => {
   const [frontError, setFrontError] = useState(false)
   const [backError, setBackError] = useState(false)
 
   return (
     <header style={{ background: theme.headerGradient, position: 'relative', overflow: 'hidden' }}>
+      {/* Pillayar Suzhi — auspicious opening symbol */}
+      <div style={{
+        background: 'rgba(0,0,0,0.25)',
+        textAlign: 'center',
+        padding: '4px 12px',
+        fontFamily: "'Noto Sans Tamil', sans-serif",
+        fontSize: 'clamp(1rem,2.5vw,1.4rem)',
+        color: '#FFD700',
+        letterSpacing: '0.5em',
+        lineHeight: 1.4,
+        userSelect: 'none',
+        textShadow: '0 0 12px rgba(255,215,0,0.6)',
+      }}>
+        ஃ
+      </div>
+
       {/* Top shimmer */}
       <div style={{ height: '3px', background: 'linear-gradient(90deg,transparent,#C9A84C,#FF6B00,#C9A84C,transparent)' }} />
 
@@ -36,6 +53,14 @@ const Header: React.FC<HeaderProps> = ({ lang, setLang, dark, setDark, t, theme 
             style={{ background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)', borderRadius: '20px', color: '#C9A84C', padding: '5px 13px', fontFamily: "'Cinzel Decorative',serif", fontSize: 'clamp(0.76rem,1.6vw,0.9rem)', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.2s' }}>
             {t.langToggle}
           </button>
+          <button
+            onClick={onSignOut}
+            aria-label="Sign out"
+            title="Lock app"
+            style={{ background: 'rgba(201,168,76,0.18)', border: '1px solid rgba(201,168,76,0.45)', borderRadius: '50%', color: '#C9A84C', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0, transition: 'all 0.2s' }}>
+            <LogOut size={14} />
+          </button>
+
           <button
             onClick={() => setDark(!dark)}
             aria-label={dark ? t.lightMode : t.darkMode}
